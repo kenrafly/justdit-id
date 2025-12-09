@@ -4,6 +4,7 @@ import WhyUs from "./components/WhyUs";
 import PopularProducts from "./components/PopularProducts";
 import ProductsList from "./components/ProductsList";
 import Bundling from "./components/Bundling";
+import RegisterCTA from "./components/RegisterCTA";
 import CTA from "./components/CTA";
 import TipsTricks from "./components/TipsTricks";
 import Contact from "./components/Contact";
@@ -22,9 +23,8 @@ export default async function Home({ searchParams }: HomeProps) {
         <Hero />
         <WhyUs />
         <PopularProducts />
-        <ProductsList searchParams={params} />
         <Bundling />
-        <CTA />
+        <RegisterCTA />
         <TipsTricks />
         <Contact />
       </main>

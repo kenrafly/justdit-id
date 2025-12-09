@@ -76,9 +76,9 @@ export default function PromoCarousel() {
   };
 
   return (
-    <div className="relative w-full aspect-[21/9] max-h-[500px] mb-16 group">
+    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] max-h-[400px] sm:max-h-[500px] mb-8 sm:mb-16 group">
       {/* Carousel Container */}
-      <div className="relative h-full overflow-hidden rounded-3xl shadow-2xl">
+      <div className="relative h-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl">
         {promos.map((promo, index) => (
           <div
             key={promo.id}
@@ -96,32 +96,32 @@ export default function PromoCarousel() {
             ></div>
 
             {/* Placeholder Image Overlay */}
-            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-              <div className="text-center px-8">
-                <div className="bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg inline-block mb-4 text-sm font-bold">
+            <div className="absolute inset-0 bg-black/20 flex items-center justify-center px-4 sm:px-8">
+              <div className="text-center max-w-full">
+                <div className="bg-yellow-400 text-gray-900 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg inline-block mb-2 sm:mb-4 text-xs sm:text-sm font-bold">
                   PROMO #{promo.id}
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-4">
+                <h2 className="text-2xl sm:text-4xl md:text-6xl font-bold text-white mb-2 sm:mb-4 leading-tight">
                   {promo.title}
                 </h2>
-                <p className="text-xl md:text-2xl text-white/90">
+                <p className="text-sm sm:text-xl md:text-2xl text-white/90">
                   {promo.subtitle}
                 </p>
               </div>
             </div>
 
             {/* Bottom Info Bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-[18%] bg-[#727271]/90 backdrop-blur-md flex items-center justify-between px-6 md:px-12">
-              <div className="flex flex-col">
-                <h3 className="text-white font-bold text-lg md:text-xl mb-1">
+            <div className="absolute bottom-0 left-0 right-0 h-[20%] sm:h-[18%] bg-[#727271]/90 backdrop-blur-md flex items-center justify-between px-3 sm:px-6 md:px-12 gap-2 sm:gap-4">
+              <div className="flex flex-col min-w-0 flex-1">
+                <h3 className="text-white font-bold text-sm sm:text-lg md:text-xl mb-0.5 sm:mb-1 truncate">
                   {promo.promoTitle}
                 </h3>
-                <p className="text-white/80 text-sm md:text-base">
+                <p className="text-white/80 text-xs sm:text-sm md:text-base truncate">
                   Berlaku hingga: {promo.validUntil}
                 </p>
               </div>
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-6 py-3 rounded-full transition-all transform hover:scale-105 whitespace-nowrap">
-                Dapatkan Promo
+              <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-3 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-base transition-all transform hover:scale-105 whitespace-nowrap shrink-0">
+                Dapatkan
               </button>
             </div>
           </div>

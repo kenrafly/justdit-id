@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -6,7 +7,13 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1">
-            <h3 className="text-2xl font-bold text-white mb-4">JustDit.id</h3>
+            <Image
+              src="/LOGO 2.png"
+              alt="JustDit.id Logo"
+              width={150}
+              height={40}
+              className="mb-4"
+            />
             <p className="text-gray-300 text-sm mb-4">
               Reseller akun premium terpercaya sejak 2020. Melayani ribuan
               pelanggan dengan komitmen kualitas dan kepuasan.

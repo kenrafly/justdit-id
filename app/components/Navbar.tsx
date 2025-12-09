@@ -69,15 +69,15 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Search Bar - Hidden on mobile */}
-            <div className="hidden lg:flex items-center bg-white/10 rounded-full px-4 py-2 border border-white/20">
+            {/* Search Bar - Desktop (lg+) and Mobile */}
+            <div className="flex lg:flex items-center bg-white/10 rounded-full px-3 py-2 border border-white/20 w-32 sm:w-40 lg:w-48">
               <input
                 type="text"
                 placeholder="Cari produk..."
-                className="bg-transparent text-white placeholder-gray-400 outline-none w-48"
+                className="bg-transparent text-white placeholder-gray-400 outline-none w-full text-sm"
               />
               <svg
-                className="w-5 h-5 text-gray-400"
+                className="w-4 h-4 lg:w-5 lg:h-5 text-gray-400 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -108,7 +108,7 @@ export default function Navbar() {
             </Link>
 
             {/* Shopping Cart */}
-            <button className="text-white hover:text-blue-300 transition-colors p-2 relative">
+            <button className="hidden md:block text-white hover:text-blue-300 transition-colors p-2 relative">
               <svg
                 className="w-6 h-6"
                 fill="none"
