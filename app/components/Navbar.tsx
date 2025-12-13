@@ -16,7 +16,10 @@ export default function Navbar() {
       setIsMenuOpen(false);
       setIsProfileOpen(false);
     } catch (error) {
-      console.error("Logout error:", error instanceof Error ? error.message : String(error));
+      console.error(
+        "Logout error:",
+        error instanceof Error ? error.message : String(error)
+      );
     }
   };
 

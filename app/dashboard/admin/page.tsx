@@ -47,7 +47,10 @@ export default function AdminDashboard() {
       );
       setUsers(usersList);
     } catch (error) {
-      console.error("Error fetching users:", error instanceof Error ? error.message : String(error));
+      console.error(
+        "Error fetching users:",
+        error instanceof Error ? error.message : String(error)
+      );
     } finally {
       setLoadingUsers(false);
     }
@@ -68,7 +71,10 @@ export default function AdminDashboard() {
       );
     } catch (error) {
       console.error("Error updating role:", error);
-      alert("Error updating role: " + (error instanceof Error ? error.message : String(error)));
+      alert(
+        "Error updating role: " +
+          (error instanceof Error ? error.message : String(error))
+      );
     }
   };
 
@@ -84,7 +90,10 @@ export default function AdminDashboard() {
       alert("User deleted successfully!");
     } catch (error) {
       console.error("Error deleting user:", error);
-      alert("Error deleting user: " + (error instanceof Error ? error.message : String(error)));
+      alert(
+        "Error deleting user: " +
+          (error instanceof Error ? error.message : String(error))
+      );
     }
   };
 

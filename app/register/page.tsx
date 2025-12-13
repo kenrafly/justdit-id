@@ -63,7 +63,9 @@ export default function RegisterPage() {
       await signInWithGoogle(role);
       // Redirect will happen via useEffect when userProfile updates
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Gagal mendaftar dengan Google");
+      setError(
+        error instanceof Error ? error.message : "Gagal mendaftar dengan Google"
+      );
       setLoading(false);
     }
   };

@@ -43,7 +43,9 @@ export default function LoginPage() {
       await signInWithGoogle();
       // Redirect will happen via useEffect when userProfile updates
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Gagal masuk dengan Google");
+      setError(
+        error instanceof Error ? error.message : "Gagal masuk dengan Google"
+      );
       setLoading(false);
     }
   };
