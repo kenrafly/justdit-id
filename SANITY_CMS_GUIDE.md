@@ -22,7 +22,9 @@ This will start the Sanity Studio at `http://localhost:3333`
 ## 📦 Available Content Types
 
 ### 1. **Homepage Settings**
+
 Controls all text content on the homepage including:
+
 - Hero section (heading, subheading, button)
 - Why Us section (heading, subheading, features)
 - Section headings (Products, Bundling, Tips, Contact)
@@ -32,7 +34,9 @@ Controls all text content on the homepage including:
 **How to edit**: Go to Studio → Homepage Settings → Edit the single document
 
 ### 2. **Promo Carousel**
+
 Manage rotating promo banners on the hero section:
+
 - Title and subtitle
 - Background image
 - Display order
@@ -42,7 +46,9 @@ Manage rotating promo banners on the hero section:
 **How to add**: Studio → Promo Carousel → Create new promo
 
 ### 3. **Products**
+
 Manage all product offerings:
+
 - Product name and description
 - Category (Streaming, Music, Cloud Storage, Gaming, VPN, Other)
 - Pricing plans with features
@@ -53,7 +59,9 @@ Manage all product offerings:
 **How to add**: Studio → Products → Create new product
 
 ### 4. **Bundles**
+
 Create and manage product bundles:
+
 - Bundle name and description
 - Included products list
 - Original vs bundle price
@@ -64,7 +72,9 @@ Create and manage product bundles:
 **How to add**: Studio → Bundles → Create new bundle
 
 ### 5. **Tips & Tricks**
+
 Blog-style content:
+
 - Article title and excerpt
 - Full content with rich text editor
 - Category (Tips, Tutorial, Guide, News)
@@ -85,11 +95,13 @@ The homepage now fetches all content from Sanity CMS:
 ## 📝 Initial Setup Steps
 
 ### Step 1: Start Sanity Studio
+
 ```bash
 npm run sanity
 ```
 
 ### Step 2: Create Homepage Settings
+
 1. Go to http://localhost:3333
 2. Click "Homepage Settings"
 3. Fill in all text content for your homepage
@@ -98,6 +110,7 @@ npm run sanity
 ### Step 3: Add Initial Content
 
 **Add a Promo**:
+
 - Click "Promo Carousel" → "Create"
 - Upload an image, set title/subtitle
 - Set order = 0 for first promo
@@ -105,6 +118,7 @@ npm run sanity
 - Publish
 
 **Add Products**:
+
 - Click "Products" → "Create"
 - Fill in product details
 - Add pricing plans
@@ -113,18 +127,21 @@ npm run sanity
 - Publish
 
 **Add Bundles**:
+
 - Click "Bundles" → "Create"
 - Add bundle details and pricing
 - Set order for display sequence
 - Publish
 
 **Add Tips/Articles**:
+
 - Click "Tips & Tricks" → "Create"
 - Write article content
 - Add cover image
 - Publish
 
 ### Step 4: View Changes
+
 - Save/Publish in Studio
 - Refresh your Next.js site (http://localhost:3000)
 - Content updates automatically!
@@ -132,6 +149,7 @@ npm run sanity
 ## 🔧 Environment Variables
 
 Already configured in `.env.local`:
+
 ```env
 NEXT_PUBLIC_SANITY_PROJECT_ID=z88p0m8n
 NEXT_PUBLIC_SANITY_DATASET=production
@@ -158,6 +176,7 @@ This creates a hosted studio at: `https://justdit-id.sanity.studio`
 ## 🔄 Data Revalidation
 
 The homepage uses Incremental Static Regeneration (ISR):
+
 - Content updates every 60 seconds automatically
 - No need to rebuild the entire site
 - Fast performance with fresh content
@@ -186,6 +205,7 @@ The homepage uses Incremental Static Regeneration (ISR):
 Current setup: Open access (development mode)
 
 For production, add authentication:
+
 1. Go to https://www.sanity.io/manage
 2. Select your project (z88p0m8n)
 3. Go to API → Tokens
@@ -198,15 +218,18 @@ For production, add authentication:
 ## 🆘 Troubleshooting
 
 **Studio won't start?**
+
 - Ensure `npm install` completed successfully
 - Check port 3333 is not in use
 
 **Content not showing?**
+
 - Check content is Published (not just Saved as draft)
 - Verify isActive toggle is set to true
 - Check order field is set correctly
 
 **Images not loading?**
+
 - Ensure images are uploaded in Studio
 - Check image field is not empty
 - Verify Sanity project ID is correct

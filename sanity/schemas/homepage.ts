@@ -52,9 +52,19 @@ export default defineType({
         {
           type: "object",
           fields: [
-            { name: "icon", title: "Icon", type: "string", description: "Icon name (e.g., shield, clock, wallet, headset)" },
+            {
+              name: "icon",
+              title: "Icon",
+              type: "string",
+              description: "Icon name (e.g., shield, clock, wallet, headset)",
+            },
             { name: "title", title: "Title", type: "string" },
-            { name: "description", title: "Description", type: "text", rows: 2 },
+            {
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 2,
+            },
           ],
         },
       ],

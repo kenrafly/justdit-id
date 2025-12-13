@@ -45,7 +45,8 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
             {data?.bundlingHeading || "Paket Bundling Hemat"}
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            {data?.bundlingSubheading || "Kombinasi produk pilihan dengan harga lebih hemat hingga 20%"}
+            {data?.bundlingSubheading ||
+              "Kombinasi produk pilihan dengan harga lebih hemat hingga 20%"}
           </p>
         </div>
 

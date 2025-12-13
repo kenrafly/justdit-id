@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth } from '@/context/AuthContext';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ResellerDashboard() {
   const { userProfile, loading } = useAuth();
@@ -12,8 +12,8 @@ export default function ResellerDashboard() {
   useEffect(() => {
     if (!loading) {
       if (!userProfile) {
-        router.push('/login');
-      } else if (userProfile.role !== 'reseller') {
+        router.push("/login");
+      } else if (userProfile.role !== "reseller") {
         router.push(`/dashboard/${userProfile.role}`);
       }
     }
@@ -27,7 +27,7 @@ export default function ResellerDashboard() {
     );
   }
 
-  if (!userProfile || userProfile.role !== 'reseller') {
+  if (!userProfile || userProfile.role !== "reseller") {
     return null;
   }
 
@@ -93,7 +93,9 @@ export default function ResellerDashboard() {
 
         {/* Recent Sales */}
         <div className="bg-[#28529C] rounded-xl p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Penjualan Terbaru</h2>
+          <h2 className="text-xl font-bold text-white mb-4">
+            Penjualan Terbaru
+          </h2>
           <div className="text-center py-8 text-gray-400">
             Belum ada penjualan. Mulai jual produk sekarang!
           </div>

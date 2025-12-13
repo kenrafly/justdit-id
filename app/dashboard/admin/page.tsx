@@ -1,11 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth, UserRole, UserProfile } from '@/context/AuthContext';
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth, UserRole, UserProfile } from "@/context/AuthContext";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function AdminDashboard() {
   const { userProfile, loading } = useAuth();
@@ -13,20 +19,20 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [editingUser, setEditingUser] = useState<string | null>(null);
-  const [selectedRole, setSelectedRole] = useState<UserRole>('buyer');
+  const [selectedRole, setSelectedRole] = useState<UserRole>("buyer");
 
   useEffect(() => {
     if (!loading) {
       if (!userProfile) {
-        router.push('/login');
-      } else if (userProfile.role !== 'admin') {
+        router.push("/login");
+      } else if (userProfile.role !== "admin") {
         router.push(`/dashboard/${userProfile.role}`);
       }
     }
   }, [userProfile, loading, router]);
 
   useEffect(() => {
-    if (userProfile?.role === 'admin') {
+    if (userProfile?.role === "admin") {
       fetchUsers();
     }
   }, [userProfile]);
@@ -34,12 +40,14 @@ export default function AdminDashboard() {
   const fetchUsers = async () => {
     try {
       setLoadingUsers(true);
-      const usersCollection = collection(db, 'users');
+      const usersCollection = collection(db, "users");
       const usersSnapshot = await getDocs(usersCollection);
-      const usersList = usersSnapshot.docs.map(doc => doc.data() as UserProfile);
+      const usersList = usersSnapshot.docs.map(
+        (doc) => doc.data() as UserProfile
+      );
       setUsers(usersList);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     } finally {
       setLoadingUsers(false);
     }
@@ -47,50 +55,58 @@ export default function AdminDashboard() {
 
   const handleRoleChange = async (userId: string, newRole: UserRole) => {
     try {
-      const userDocRef = doc(db, 'users', userId);
+      const userDocRef = doc(db, "users", userId);
       await updateDoc(userDocRef, { role: newRole });
-      
+
       // Update local state
-      setUsers(users.map(u => u.uid === userId ? { ...u, role: newRole } : u));
+      setUsers(
+        users.map((u) => (u.uid === userId ? { ...u, role: newRole } : u))
+      );
       setEditingUser(null);
-      alert('Role updated successfully! User must logout and login to see changes.');
+      alert(
+        "Role updated successfully! User must logout and login to see changes."
+      );
     } catch (error) {
-      console.error('Error updating role:', error);
-      alert('Error updating role: ' + error.message);
+      console.error("Error updating role:", error);
+      alert("Error updating role: " + error.message);
     }
   };
 
   const handleDeleteUser = async (userId: string) => {
-    if (!confirm('Are you sure you want to delete this user?')) return;
-    
+    if (!confirm("Are you sure you want to delete this user?")) return;
+
     try {
-      const userDocRef = doc(db, 'users', userId);
+      const userDocRef = doc(db, "users", userId);
       await deleteDoc(userDocRef);
-      
+
       // Update local state
-      setUsers(users.filter(u => u.uid !== userId));
-      alert('User deleted successfully!');
+      setUsers(users.filter((u) => u.uid !== userId));
+      alert("User deleted successfully!");
     } catch (error) {
-      console.error('Error deleting user:', error);
-      alert('Error deleting user: ' + error.message);
+      console.error("Error deleting user:", error);
+      alert("Error deleting user: " + error.message);
     }
   };
 
   const getRoleBadgeColor = (role: UserRole) => {
     switch (role) {
-      case 'admin': return 'bg-red-500';
-      case 'reseller': return 'bg-purple-500';
-      case 'buyer': return 'bg-blue-500';
-      default: return 'bg-gray-500';
+      case "admin":
+        return "bg-red-500";
+      case "reseller":
+        return "bg-purple-500";
+      case "buyer":
+        return "bg-blue-500";
+      default:
+        return "bg-gray-500";
     }
   };
 
   const getStats = () => {
     return {
       totalUsers: users.length,
-      buyers: users.filter(u => u.role === 'buyer').length,
-      resellers: users.filter(u => u.role === 'reseller').length,
-      admins: users.filter(u => u.role === 'admin').length,
+      buyers: users.filter((u) => u.role === "buyer").length,
+      resellers: users.filter((u) => u.role === "reseller").length,
+      admins: users.filter((u) => u.role === "admin").length,
     };
   };
 
@@ -102,7 +118,7 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!userProfile || userProfile.role !== 'admin') {
+  if (!userProfile || userProfile.role !== "admin") {
     return null;
   }
 
@@ -153,7 +169,7 @@ export default function AdminDashboard() {
         <div className="bg-[#28529C] rounded-xl p-6 mb-8">
           <h2 className="text-xl font-bold text-white mb-4">Admin Tools</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <button 
+            <button
               onClick={fetchUsers}
               className="bg-[#4E99BE] hover:bg-[#3d7a99] text-white p-4 rounded-lg text-center font-semibold transition-colors"
             >
@@ -171,31 +187,40 @@ export default function AdminDashboard() {
         {/* User Management Table */}
         <div className="bg-[#28529C] rounded-xl p-6">
           <h2 className="text-xl font-bold text-white mb-4">User Management</h2>
-          
+
           {users.length === 0 ? (
-            <div className="text-center py-8 text-gray-400">
-              No users found
-            </div>
+            <div className="text-center py-8 text-gray-400">No users found</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left text-white font-semibold py-3 px-4">User</th>
-                    <th className="text-left text-white font-semibold py-3 px-4">Email</th>
-                    <th className="text-left text-white font-semibold py-3 px-4">Role</th>
-                    <th className="text-left text-white font-semibold py-3 px-4">Actions</th>
+                    <th className="text-left text-white font-semibold py-3 px-4">
+                      User
+                    </th>
+                    <th className="text-left text-white font-semibold py-3 px-4">
+                      Email
+                    </th>
+                    <th className="text-left text-white font-semibold py-3 px-4">
+                      Role
+                    </th>
+                    <th className="text-left text-white font-semibold py-3 px-4">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {users.map((user) => (
-                    <tr key={user.uid} className="border-b border-white/10 hover:bg-white/5">
+                    <tr
+                      key={user.uid}
+                      className="border-b border-white/10 hover:bg-white/5"
+                    >
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-3">
                           {user.photoURL ? (
-                            <img 
-                              src={user.photoURL} 
-                              alt={user.displayName || 'User'} 
+                            <img
+                              src={user.photoURL}
+                              alt={user.displayName || "User"}
                               className="w-8 h-8 rounded-full"
                             />
                           ) : (
@@ -203,7 +228,9 @@ export default function AdminDashboard() {
                               {user.email?.charAt(0).toUpperCase()}
                             </div>
                           )}
-                          <span className="text-white">{user.displayName || 'No Name'}</span>
+                          <span className="text-white">
+                            {user.displayName || "No Name"}
+                          </span>
                         </div>
                       </td>
                       <td className="py-3 px-4 text-gray-300">{user.email}</td>
@@ -211,7 +238,9 @@ export default function AdminDashboard() {
                         {editingUser === user.uid ? (
                           <select
                             value={selectedRole}
-                            onChange={(e) => setSelectedRole(e.target.value as UserRole)}
+                            onChange={(e) =>
+                              setSelectedRole(e.target.value as UserRole)
+                            }
                             className="bg-white/10 text-white border border-white/20 rounded px-2 py-1"
                           >
                             <option value="buyer">Buyer</option>
@@ -219,7 +248,9 @@ export default function AdminDashboard() {
                             <option value="admin">Admin</option>
                           </select>
                         ) : (
-                          <span className={`${getRoleBadgeColor(user.role)} text-white px-3 py-1 rounded-full text-sm capitalize`}>
+                          <span
+                            className={`${getRoleBadgeColor(user.role)} text-white px-3 py-1 rounded-full text-sm capitalize`}
+                          >
                             {user.role}
                           </span>
                         )}
@@ -229,7 +260,9 @@ export default function AdminDashboard() {
                           {editingUser === user.uid ? (
                             <>
                               <button
-                                onClick={() => handleRoleChange(user.uid, selectedRole)}
+                                onClick={() =>
+                                  handleRoleChange(user.uid, selectedRole)
+                                }
                                 className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors"
                               >
                                 Save

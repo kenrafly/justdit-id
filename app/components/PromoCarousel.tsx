@@ -57,9 +57,12 @@ interface PromoCarouselProps {
   promos?: Promo[];
 }
 
-export default function PromoCarousel({ promos: initialPromos }: PromoCarouselProps) {
+export default function PromoCarousel({
+  promos: initialPromos,
+}: PromoCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const displayPromos = initialPromos && initialPromos.length > 0 ? initialPromos : fallbackPromos;
+  const displayPromos =
+    initialPromos && initialPromos.length > 0 ? initialPromos : fallbackPromos;
 
   // Auto-slide every 4 seconds
   useEffect(() => {
@@ -81,7 +84,9 @@ export default function PromoCarousel({ promos: initialPromos }: PromoCarouselPr
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + displayPromos.length) % displayPromos.length);
+    setCurrentSlide(
+      (prev) => (prev - 1 + displayPromos.length) % displayPromos.length
+    );
   };
 
   // Format date to readable format

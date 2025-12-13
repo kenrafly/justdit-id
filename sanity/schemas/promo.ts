@@ -23,7 +23,8 @@ export default defineType({
       name: "image",
       title: "Promo Image",
       type: "image",
-      description: "Upload promo image (recommended: 1920x1080px). The image will be displayed clean without text overlay.",
+      description:
+        "Upload promo image (recommended: 1920x1080px). The image will be displayed clean without text overlay.",
       options: {
         hotspot: true,
       },

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth } from '@/context/AuthContext';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function BuyerDashboard() {
   const { userProfile, loading } = useAuth();
@@ -12,8 +12,8 @@ export default function BuyerDashboard() {
   useEffect(() => {
     if (!loading) {
       if (!userProfile) {
-        router.push('/login');
-      } else if (userProfile.role !== 'buyer') {
+        router.push("/login");
+      } else if (userProfile.role !== "buyer") {
         // Redirect to appropriate dashboard
         router.push(`/dashboard/${userProfile.role}`);
       }
@@ -28,7 +28,7 @@ export default function BuyerDashboard() {
     );
   }
 
-  if (!userProfile || userProfile.role !== 'buyer') {
+  if (!userProfile || userProfile.role !== "buyer") {
     return null;
   }
 

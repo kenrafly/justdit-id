@@ -5,6 +5,7 @@ This guide explains the role-based authentication system implemented in JustDit.
 ## Overview
 
 The system supports three user roles:
+
 - **Buyer** (Default): Regular customers who purchase products
 - **Reseller**: Partners who sell products and earn commissions
 - **Admin**: System administrators with full access
@@ -12,6 +13,7 @@ The system supports three user roles:
 ## User Roles
 
 ### 1. Buyer (Default Role)
+
 - **Dashboard**: `/dashboard/buyer`
 - **Capabilities**:
   - Browse and purchase products
@@ -21,6 +23,7 @@ The system supports three user roles:
 - **Registration**: Automatically assigned when user signs up
 
 ### 2. Reseller
+
 - **Dashboard**: `/dashboard/reseller`
 - **Capabilities**:
   - All buyer capabilities
@@ -31,6 +34,7 @@ The system supports three user roles:
 - **Registration**: User selects "Reseller" during signup
 
 ### 3. Admin
+
 - **Dashboard**: `/dashboard/admin`
 - **Capabilities**:
   - Manage all users (buyers, resellers, admins)
@@ -45,12 +49,14 @@ The system supports three user roles:
 ### 1. User Registration
 
 When a user registers:
+
 1. Firebase Authentication creates the auth account
 2. A user profile document is created in Firestore at `/users/{uid}`
 3. Profile includes: `uid`, `email`, `displayName`, `photoURL`, `role`
 4. Default role is `buyer` unless specified
 
 **Firestore Structure:**
+
 ```javascript
 /users/{uid}
   - uid: string
@@ -63,6 +69,7 @@ When a user registers:
 ### 2. User Login
 
 When a user logs in:
+
 1. Firebase Authentication validates credentials
 2. User profile is fetched from Firestore
 3. `userProfile` state is set in AuthContext
@@ -71,6 +78,7 @@ When a user logs in:
 ### 3. Role-Based Redirects
 
 **After Login:**
+
 - Buyer → `/dashboard/buyer`
 - Reseller → `/dashboard/reseller`
 - Admin → `/dashboard/admin`
@@ -84,7 +92,7 @@ Each dashboard checks the user's role and redirects if unauthorized.
 
 ```typescript
 // New type for user roles
-export type UserRole = 'buyer' | 'reseller' | 'admin';
+export type UserRole = "buyer" | "reseller" | "admin";
 
 // Extended user profile
 export interface UserProfile {
@@ -110,6 +118,7 @@ interface AuthContextType {
 ### Registration with Role Selection
 
 The register page includes a role selector:
+
 - Radio buttons for Buyer or Reseller
 - Default selection: Buyer
 - Description for each role
@@ -126,17 +135,17 @@ service cloud.firestore {
     // Users can read their own profile
     match /users/{userId} {
       allow read: if request.auth != null && request.auth.uid == userId;
-      
+
       // Users can create their profile on signup
-      allow create: if request.auth != null 
+      allow create: if request.auth != null
         && request.auth.uid == userId
         && request.resource.data.role in ['buyer', 'reseller'];
-      
+
       // Users cannot change their own role
-      allow update: if request.auth != null 
+      allow update: if request.auth != null
         && request.auth.uid == userId
         && request.resource.data.role == resource.data.role;
-      
+
       // Only admins can delete users or change roles
       allow delete, write: if request.auth != null
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
@@ -162,51 +171,56 @@ Admins cannot self-register. To create an admin user:
 
 ```javascript
 // Node.js backend script
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 admin.initializeApp();
 
 const db = admin.firestore();
 
 async function makeAdmin(uid) {
-  await db.collection('users').doc(uid).update({
-    role: 'admin'
+  await db.collection("users").doc(uid).update({
+    role: "admin",
   });
   console.log(`User ${uid} is now an admin`);
 }
 
-makeAdmin('USER_UID_HERE');
+makeAdmin("USER_UID_HERE");
 ```
 
 ### Method 3: Cloud Function (Recommended)
 
 ```typescript
 // functions/src/index.ts
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
 export const setUserRole = functions.https.onCall(async (data, context) => {
   // Verify caller is admin
   if (!context.auth) {
-    throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "Must be logged in"
+    );
   }
-  
-  const callerProfile = await admin.firestore()
-    .collection('users')
+
+  const callerProfile = await admin
+    .firestore()
+    .collection("users")
     .doc(context.auth.uid)
     .get();
-    
-  if (callerProfile.data()?.role !== 'admin') {
-    throw new functions.https.HttpsError('permission-denied', 'Must be admin');
+
+  if (callerProfile.data()?.role !== "admin") {
+    throw new functions.https.HttpsError("permission-denied", "Must be admin");
   }
-  
+
   // Update target user's role
-  await admin.firestore()
-    .collection('users')
+  await admin
+    .firestore()
+    .collection("users")
     .doc(data.uid)
     .update({ role: data.role });
-    
+
   return { success: true };
 });
 ```
@@ -214,6 +228,7 @@ export const setUserRole = functions.https.onCall(async (data, context) => {
 ## Dashboard Features
 
 ### Buyer Dashboard (`/dashboard/buyer`)
+
 - Total purchases counter
 - Active accounts counter
 - Total spending tracker
@@ -221,6 +236,7 @@ export const setUserRole = functions.https.onCall(async (data, context) => {
 - Recent orders list
 
 ### Reseller Dashboard (`/dashboard/reseller`)
+
 - Total sales counter
 - Customer count
 - Revenue tracker
@@ -229,6 +245,7 @@ export const setUserRole = functions.https.onCall(async (data, context) => {
 - Recent sales list
 
 ### Admin Dashboard (`/dashboard/admin`)
+
 - Total users counter
 - Total orders counter
 - Total revenue tracker
@@ -246,11 +263,11 @@ import { useAuth } from '@/context/AuthContext';
 
 export default function MyComponent() {
   const { userProfile } = useAuth();
-  
+
   if (!userProfile) {
     return <div>Please log in</div>;
   }
-  
+
   return (
     <div>
       <h1>Welcome, {userProfile.role}!</h1>
@@ -273,17 +290,17 @@ import { useAuth } from '@/context/AuthContext';
 export default function ProtectedPage() {
   const { userProfile, loading } = useAuth();
   const router = useRouter();
-  
+
   useEffect(() => {
     if (!loading && !userProfile) {
       router.push('/login');
     }
   }, [userProfile, loading, router]);
-  
+
   if (loading || !userProfile) {
     return <div>Loading...</div>;
   }
-  
+
   return <div>Protected Content</div>;
 }
 ```
@@ -291,21 +308,21 @@ export default function ProtectedPage() {
 ### Redirect Based on Role
 
 ```typescript
-'use client';
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const { userProfile } = useAuth();
   const router = useRouter();
-  
+
   useEffect(() => {
     if (userProfile) {
       router.push(`/dashboard/${userProfile.role}`);
     }
   }, [userProfile, router]);
-  
+
   // Login form...
 }
 ```
@@ -313,18 +330,21 @@ export default function LoginPage() {
 ## Testing
 
 ### Test Buyer Flow
+
 1. Register with "Pembeli" role
 2. Login → Should redirect to `/dashboard/buyer`
 3. Click profile → See "buyer" role badge
 4. Click Dashboard → Navigate to buyer dashboard
 
 ### Test Reseller Flow
+
 1. Register with "Reseller" role
 2. Login → Should redirect to `/dashboard/reseller`
 3. Click profile → See "reseller" role badge
 4. Click Dashboard → Navigate to reseller dashboard
 
 ### Test Admin Flow
+
 1. Register normally (becomes buyer)
 2. Manually change role to "admin" in Firestore
 3. Logout and login again
@@ -339,7 +359,8 @@ export default function LoginPage() {
 
 ### Issue: "Permission denied" when accessing dashboard
 
-**Solution**: 
+**Solution**:
+
 1. Check Firestore rules are properly set
 2. Verify user has correct role in Firestore
 3. Clear browser cache and cookies
@@ -351,7 +372,8 @@ export default function LoginPage() {
 
 ### Issue: Role not showing in navbar
 
-**Solution**: 
+**Solution**:
+
 1. Check `userProfile` is being fetched in AuthContext
 2. Verify Firestore document exists for user
 3. Check browser console for errors

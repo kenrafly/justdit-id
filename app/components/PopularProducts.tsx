@@ -13,7 +13,10 @@ interface PopularProductsProps {
   data?: Homepage | null;
 }
 
-export default function PopularProducts({ products: cmsProducts, data }: PopularProductsProps) {
+export default function PopularProducts({
+  products: cmsProducts,
+  data,
+}: PopularProductsProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -136,17 +139,24 @@ export default function PopularProducts({ products: cmsProducts, data }: Popular
   ];
 
   // Transform CMS products to component format
-  const products = cmsProducts && cmsProducts.length > 0 
-    ? cmsProducts.map((product: any) => ({
-        name: product.name,
-        description: product.description || '',
-        price: product.plans?.[0]?.price ? `Rp ${product.plans[0].price.toLocaleString('id-ID')}` : 'Rp 0',
-        duration: product.plans?.[0]?.duration || '30 Hari',
-        image: product.image?.asset ? product.image : (product.logo?.asset ? product.logo : null),
-        badge: product.badge || 'Available',
-        category: (product.category || 'streaming') as ProductCategory,
-      }))
-    : fallbackProducts.map(p => ({ ...p, image: null }));
+  const products =
+    cmsProducts && cmsProducts.length > 0
+      ? cmsProducts.map((product: any) => ({
+          name: product.name,
+          description: product.description || "",
+          price: product.plans?.[0]?.price
+            ? `Rp ${product.plans[0].price.toLocaleString("id-ID")}`
+            : "Rp 0",
+          duration: product.plans?.[0]?.duration || "30 Hari",
+          image: product.image?.asset
+            ? product.image
+            : product.logo?.asset
+              ? product.logo
+              : null,
+          badge: product.badge || "Available",
+          category: (product.category || "streaming") as ProductCategory,
+        }))
+      : fallbackProducts.map((p) => ({ ...p, image: null }));
 
   const categories = [
     { id: "editing" as ProductCategory, label: "Editing" },

@@ -7,7 +7,13 @@ import RegisterCTA from "./components/RegisterCTA";
 import TipsTricks from "./components/TipsTricks";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import { getHomepage, getProducts, getBundles, getTips, getPromos } from "@/sanity/queries";
+import {
+  getHomepage,
+  getProducts,
+  getBundles,
+  getTips,
+  getPromos,
+} from "@/sanity/queries";
 
 interface HomeProps {
   searchParams: Promise<{ page?: string }>;
@@ -17,7 +23,7 @@ export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
-  
+
   // Fetch all homepage data from Sanity
   const [homepage, products, bundles, tips, promos] = await Promise.all([
     getHomepage(),

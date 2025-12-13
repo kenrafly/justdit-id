@@ -13,7 +13,7 @@ import {
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
-export type UserRole = 'buyer' | 'reseller' | 'admin';
+export type UserRole = "buyer" | "reseller" | "admin";
 
 export interface UserProfile {
   uid: string;
@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const userDocRef = doc(db, "users", uid);
       const userDoc = await getDoc(userDocRef);
-      
+
       if (userDoc.exists()) {
         return userDoc.data() as UserProfile;
       }
@@ -67,7 +67,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Create user profile in Firestore
   const createUserProfile = async (
     user: User,
-    role: UserRole = 'buyer'
+    role: UserRole = "buyer"
   ): Promise<void> => {
     try {
       const userDocRef = doc(db, "users", user.uid);
@@ -88,42 +88,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
-      
+
       if (user) {
         const profile = await fetchUserProfile(user.uid);
         if (profile) {
           setUserProfile(profile);
         } else {
           // Create profile with default buyer role if doesn't exist
-          await createUserProfile(user, 'buyer');
+          await createUserProfile(user, "buyer");
         }
       } else {
         setUserProfile(null);
       }
-      
+
       setLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
-  const signUp = async (email: string, password: string, role: UserRole = 'buyer') => {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (
+    email: string,
+    password: string,
+    role: UserRole = "buyer"
+  ) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     await createUserProfile(userCredential.user, role);
   };
 
   const signIn = async (email: string, password: string) => {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const profile = await fetchUserProfile(userCredential.user.uid);
     if (profile) {
       setUserProfile(profile);
     }
   };
 
-  const signInWithGoogle = async (role: UserRole = 'buyer') => {
+  const signInWithGoogle = async (role: UserRole = "buyer") => {
     const provider = new GoogleAuthProvider();
     const userCredential = await signInWithPopup(auth, provider);
-    
+
     // Check if user already has a profile
     const existingProfile = await fetchUserProfile(userCredential.user.uid);
     if (!existingProfile) {
@@ -149,9 +161,5 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -98,7 +98,8 @@ export default function TipsTricks({ tips: cmsTips, data }: TipsTricksProps) {
             {data?.tipsHeading || "Tips & Tricks dan FAQ"}
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            {data?.tipsSubheading || "Panduan dan jawaban untuk pertanyaan umum Anda"}
+            {data?.tipsSubheading ||
+              "Panduan dan jawaban untuk pertanyaan umum Anda"}
           </p>
         </div>
 
