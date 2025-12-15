@@ -52,11 +52,11 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           {/* Left Side - 4 small bundles in 2x2 grid */}
-          <div className="grid grid-cols-2 gap-2 md:gap-4">
+          <div className="grid grid-cols-2 gap-1">
             {bundles.slice(0, 3).map((bundle, index) => (
               <div
                 key={index}
-                className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl aspect-square"
+                className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
                 <div className="p-2 sm:p-3 md:p-4 flex flex-col h-full justify-between">
                   <div className="flex items-center justify-between mb-1 md:mb-2">
@@ -119,7 +119,7 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
             ))}
 
             {/* Add 4th bundle placeholder */}
-            <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl aspect-square">
+            <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
               <div className="p-2 sm:p-3 md:p-4 flex flex-col h-full justify-between">
                 <div className="flex items-center justify-between mb-1 md:mb-2">
                   <span className="bg-yellow-500 text-black px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
