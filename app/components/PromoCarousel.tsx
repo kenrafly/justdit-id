@@ -12,6 +12,7 @@ interface Promo {
   promoTitle: string;
   validUntil: string;
   image: any;
+  imageUrl?: string;
   bgColor: string;
   buttonLink?: string;
   order: number;
@@ -114,14 +115,24 @@ export default function PromoCarousel({
           >
             {/* Background Image Container */}
             <div className="relative flex-1 bg-gradient-to-br from-[#041A2F] to-[#28529C]">
-              {promo.image && (
+              {promo.imageUrl ? (
                 <Image
-                  src={urlFor(promo.image).width(1920).height(1080).url()}
+                  src={promo.imageUrl}
                   alt={promo.title}
                   fill
-                  className="object-contain"
+                  className="object-cover"
                   priority={index === 0}
                 />
+              ) : (
+                promo.image && (
+                  <Image
+                    src={urlFor(promo.image).width(1920).height(1080).url()}
+                    alt={promo.title}
+                    fill
+                    className="object-contain"
+                    priority={index === 0}
+                  />
+                )
               )}
             </div>
 

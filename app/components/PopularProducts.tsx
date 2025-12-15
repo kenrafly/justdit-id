@@ -153,10 +153,11 @@ export default function PopularProducts({
             : product.logo?.asset
               ? product.logo
               : null,
+          imageUrl: product.imageUrl || null,
           badge: product.badge || "Available",
           category: (product.category || "streaming") as ProductCategory,
         }))
-      : fallbackProducts.map((p) => ({ ...p, image: null }));
+      : fallbackProducts.map((p) => ({ ...p, image: null, imageUrl: null }));
 
   const categories = [
     { id: "editing" as ProductCategory, label: "Editing" },
@@ -330,7 +331,14 @@ export default function PopularProducts({
                         {product.badge}
                       </span>
                     </div>
-                    {product.image?.asset ? (
+                    {product.imageUrl ? (
+                      <Image
+                        src={product.imageUrl}
+                        alt={product.name}
+                        fill
+                        className="object-contain p-8"
+                      />
+                    ) : product.image?.asset ? (
                       <Image
                         src={urlFor(product.image).width(400).height(300).url()}
                         alt={product.name}
@@ -425,7 +433,14 @@ export default function PopularProducts({
                       {product.badge}
                     </span>
                   </div>
-                  {product.image?.asset ? (
+                  {product.imageUrl ? (
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-6"
+                    />
+                  ) : product.image?.asset ? (
                     <Image
                       src={urlFor(product.image).width(400).height(300).url()}
                       alt={product.name}

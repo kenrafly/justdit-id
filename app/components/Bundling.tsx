@@ -51,35 +51,35 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          {/* Left Side - 4 small bundles in 2x2 grid (hidden on mobile, shown on md+) */}
-          <div className="hidden md:grid grid-cols-2 gap-4">
+          {/* Left Side - 4 small bundles in 2x2 grid */}
+          <div className="grid grid-cols-2 gap-2 md:gap-4">
             {bundles.slice(0, 3).map((bundle, index) => (
               <div
                 key={index}
-                className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl aspect-square"
               >
-                <div className="p-4 sm:p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="bg-yellow-500 text-black px-2 sm:px-3 py-1 rounded-full text-xs font-bold">
+                <div className="p-2 sm:p-3 md:p-4 flex flex-col h-full justify-between">
+                  <div className="flex items-center justify-between mb-1 md:mb-2">
+                    <span className="bg-yellow-500 text-black px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
                       {bundle.badge}
                     </span>
-                    <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                    <span className="bg-red-500 text-white px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
                       -{bundle.discount}
                     </span>
                   </div>
 
-                  <h3 className="text-base sm:text-xl font-bold text-white mb-2">
+                  <h3 className="text-xs sm:text-base md:text-xl font-bold text-white mb-1">
                     {bundle.name}
                   </h3>
-                  <p className="text-gray-200 text-xs sm:text-sm mb-4">
+                  <p className="text-gray-200 text-[10px] sm:text-xs mb-2">
                     {bundle.description}
                   </p>
 
-                  <div className="space-y-1 mb-4">
+                  <div className="space-y-0.5 mb-2">
                     {bundle.products.map((product, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center gap-2 text-white text-xs sm:text-sm"
+                        className="flex items-center gap-1 text-white text-[10px] sm:text-xs"
                       >
                         <span className="text-green-400">✓</span>
                         <span>{product}</span>
@@ -87,17 +87,21 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
                     ))}
                   </div>
 
-                  <div className="border-t border-white/20 pt-4">
-                    <div className="flex items-end gap-2 mb-4">
+                  <div className="border-t border-white/20 pt-2 mt-2">
+                    <div className="flex items-end gap-1 sm:gap-2 mb-2">
                       <div>
-                        <div className="text-xs text-gray-300 mb-1">Normal</div>
-                        <div className="text-xs sm:text-sm text-gray-400 line-through">
+                        <div className="text-[10px] text-gray-300 mb-0.5">
+                          Normal
+                        </div>
+                        <div className="text-[10px] sm:text-xs text-gray-400 line-through">
                           Rp {bundle.originalPrice.toLocaleString("id-ID")}
                         </div>
                       </div>
                       <div>
-                        <div className="text-xs text-gray-300 mb-1">Paket</div>
-                        <div className="text-lg sm:text-2xl font-bold text-white">
+                        <div className="text-[10px] text-gray-300 mb-0.5">
+                          Paket
+                        </div>
+                        <div className="text-sm sm:text-lg font-bold text-white">
                           Rp {bundle.bundlePrice.toLocaleString("id-ID")}
                         </div>
                       </div>
@@ -105,7 +109,7 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
 
                     <Link
                       href="#contact"
-                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-2 rounded-full text-xs sm:text-sm font-bold transition-colors"
+                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-1 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold transition-colors"
                     >
                       Ambil Paket
                     </Link>
@@ -115,120 +119,58 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
             ))}
 
             {/* Add 4th bundle placeholder */}
-            <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl">
-              <div className="p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="bg-yellow-500 text-black px-2 sm:px-3 py-1 rounded-full text-xs font-bold">
+            <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl aspect-square">
+              <div className="p-2 sm:p-3 md:p-4 flex flex-col h-full justify-between">
+                <div className="flex items-center justify-between mb-1 md:mb-2">
+                  <span className="bg-yellow-500 text-black px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
                     Custom
                   </span>
-                  <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                  <span className="bg-red-500 text-white px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold">
                     -20%
                   </span>
                 </div>
 
-                <h3 className="text-base sm:text-xl font-bold text-white mb-2">
+                <h3 className="text-xs sm:text-base md:text-xl font-bold text-white mb-1">
                   Paket Custom
                 </h3>
-                <p className="text-gray-200 text-xs sm:text-sm mb-4">
+                <p className="text-gray-200 text-[10px] sm:text-xs mb-2">
                   Pilih produk sesuai kebutuhan Anda
                 </p>
 
-                <div className="space-y-1 mb-4">
-                  <div className="flex items-center gap-2 text-white text-xs sm:text-sm">
+                <div className="space-y-0.5 mb-2">
+                  <div className="flex items-center gap-1 text-white text-[10px] sm:text-xs">
                     <span className="text-green-400">✓</span>
                     <span>Pilih 3+ Produk</span>
                   </div>
-                  <div className="flex items-center gap-2 text-white text-xs sm:text-sm">
+                  <div className="flex items-center gap-1 text-white text-[10px] sm:text-xs">
                     <span className="text-green-400">✓</span>
                     <span>Diskon Hingga 20%</span>
                   </div>
-                  <div className="flex items-center gap-2 text-white text-xs sm:text-sm">
+                  <div className="flex items-center gap-1 text-white text-[10px] sm:text-xs">
                     <span className="text-green-400">✓</span>
                     <span>Support 24/7</span>
                   </div>
                 </div>
 
-                <div className="border-t border-white/20 pt-4">
-                  <div className="mb-4">
-                    <div className="text-xs text-gray-300 mb-1">Mulai dari</div>
-                    <div className="text-lg sm:text-2xl font-bold text-white">
+                <div className="border-t border-white/20 pt-2 mt-2">
+                  <div className="mb-2">
+                    <div className="text-[10px] text-gray-300 mb-0.5">
+                      Mulai dari
+                    </div>
+                    <div className="text-sm sm:text-lg font-bold text-white">
                       Rp 50.000
                     </div>
                   </div>
 
                   <Link
                     href="#contact"
-                    className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-2 rounded-full text-xs sm:text-sm font-bold transition-colors"
+                    className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-1 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold transition-colors"
                   >
                     Request Custom
                   </Link>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Mobile View - Simple card carousel */}
-          <div className="md:hidden space-y-4">
-            {bundles.map((bundle, index) => (
-              <div
-                key={index}
-                className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden shadow-xl"
-              >
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-xs font-bold">
-                      {bundle.badge}
-                    </span>
-                    <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                      -{bundle.discount}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2">
-                    {bundle.name}
-                  </h3>
-                  <p className="text-gray-200 text-sm mb-4">
-                    {bundle.description}
-                  </p>
-
-                  <div className="space-y-2 mb-4">
-                    {bundle.products.map((product, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center gap-2 text-white text-sm"
-                      >
-                        <span className="text-green-400">✓</span>
-                        <span>{product}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="border-t border-white/20 pt-4">
-                    <div className="flex items-end gap-3 mb-4">
-                      <div>
-                        <div className="text-xs text-gray-300 mb-1">Normal</div>
-                        <div className="text-sm text-gray-400 line-through">
-                          Rp {bundle.originalPrice.toLocaleString("id-ID")}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-300 mb-1">Paket</div>
-                        <div className="text-2xl font-bold text-white">
-                          Rp {bundle.bundlePrice.toLocaleString("id-ID")}
-                        </div>
-                      </div>
-                    </div>
-
-                    <Link
-                      href="#contact"
-                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-3 rounded-full text-sm font-bold transition-colors"
-                    >
-                      Ambil Paket
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
 
           {/* Right Side - 1 large featured bundle */}

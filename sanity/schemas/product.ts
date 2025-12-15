@@ -90,6 +90,12 @@ export default defineType({
       },
     }),
     defineField({
+      name: "imageUrl",
+      title: "Image URL (Alternative)",
+      type: "url",
+      description: "Direct image URL (use this OR upload image above)",
+    }),
+    defineField({
       name: "bgColor",
       title: "Background Color",
       type: "string",

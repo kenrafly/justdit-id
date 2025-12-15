@@ -12,21 +12,6 @@ const client = createClient({
   useCdn: false,
 });
 
-// Helper function to upload image from URL
-async function uploadImageFromUrl(url: string, filename: string) {
-  try {
-    const response = await fetch(url);
-    const buffer = await response.arrayBuffer();
-    const asset = await client.assets.upload("image", Buffer.from(buffer), {
-      filename: filename,
-    });
-    return asset._id;
-  } catch (error) {
-    console.warn(`Failed to upload ${filename}:`, error);
-    return null;
-  }
-}
-
 const seedData = {
   // Homepage Settings
   homepage: {
@@ -114,7 +99,7 @@ const seedData = {
     },
   ],
 
-  // Products
+  // Products (will add imageUrl after creation)
   products: [
     {
       _type: "product",
@@ -124,6 +109,8 @@ const seedData = {
       badge: "Best Seller",
       description:
         "Akses unlimited ke ribuan film dan series berkualitas HD/4K",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
       features: [
         "Kualitas Ultra HD 4K",
         "Bisa 4 perangkat bersamaan",
@@ -160,6 +147,8 @@ const seedData = {
       category: "music",
       badge: "Popular",
       description: "Dengarkan musik tanpa iklan dengan kualitas audio terbaik",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
       features: [
         "Tanpa iklan",
         "Download musik offline",
@@ -188,6 +177,8 @@ const seedData = {
       category: "streaming",
       badge: "Hot",
       description: "Streaming film Disney, Marvel, Star Wars, dan konten lokal",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg",
       features: [
         "Konten Disney & Marvel",
         "Film Star Wars lengkap",
@@ -216,6 +207,8 @@ const seedData = {
       category: "streaming",
       badge: "Trending",
       description: "Nonton YouTube tanpa iklan dan download video offline",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
       features: [
         "Tanpa iklan",
         "Background play",
@@ -237,13 +230,75 @@ const seedData = {
       order: 3,
       isActive: true,
     },
+    {
+      _type: "product",
+      name: "Canva Pro",
+      slug: { _type: "slug", current: "canva-pro" },
+      category: "design",
+      badge: "Popular",
+      description: "Tools desain profesional dengan template premium unlimited",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg",
+      features: [
+        "100+ juta foto & grafis premium",
+        "Background remover",
+        "Brand kit & templates",
+        "Resize & animasi otomatis",
+      ],
+      bgColor: "#00C4CC",
+      plans: [
+        {
+          name: "1 Bulan",
+          duration: "1 Bulan",
+          price: 28000,
+          originalPrice: 139000,
+          features: ["Premium Content", "Brand Kit", "Background Remover"],
+          popular: true,
+        },
+      ],
+      isFeatured: true,
+      order: 4,
+      isActive: true,
+    },
+    {
+      _type: "product",
+      name: "ChatGPT Plus",
+      slug: { _type: "slug", current: "chatgpt-plus" },
+      category: "ai",
+      badge: "Hot",
+      description: "AI assistant terbaik untuk produktivitas dan kreativitas",
+      imageUrl:
+        "https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg",
+      features: [
+        "Akses GPT-4",
+        "Response lebih cepat",
+        "Priority access",
+        "Plugin & browsing",
+      ],
+      bgColor: "#10A37F",
+      plans: [
+        {
+          name: "1 Bulan",
+          duration: "1 Bulan",
+          price: 85000,
+          originalPrice: 280000,
+          features: ["GPT-4 Access", "Fast Response", "Plugins"],
+          popular: true,
+        },
+      ],
+      isFeatured: true,
+      order: 5,
+      isActive: true,
+    },
   ],
 
-  // Promos
+  // Promos with images
   promos: [
     {
       _type: "promo",
-      promoTitle: "Promo Netflix 50% OFF",
+      promoTitle: "Promo Netflix 50% OFF - Binge Watch Sepuasnya!",
+      imageUrl:
+        "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&q=80",
       validUntil: "2025-12-31",
       buttonLink: "#contact",
       order: 0,
@@ -251,10 +306,22 @@ const seedData = {
     },
     {
       _type: "promo",
-      promoTitle: "Bundle Spotify + YouTube Premium",
+      promoTitle: "Bundle Spotify + YouTube Premium Hemat 40%",
+      imageUrl:
+        "https://images.unsplash.com/photo-1611339555312-e607c8352fd7?w=800&q=80",
       validUntil: "2025-12-25",
       buttonLink: "#contact",
       order: 1,
+      isActive: true,
+    },
+    {
+      _type: "promo",
+      promoTitle: "Disney+ Spesial Akhir Tahun - Nonton Marvel Sepuasnya",
+      imageUrl:
+        "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800&q=80",
+      validUntil: "2025-12-31",
+      buttonLink: "#contact",
+      order: 2,
       isActive: true,
     },
   ],
@@ -284,7 +351,7 @@ const seedData = {
     },
   ],
 
-  // Tips
+  // Tips & Tricks - Enhanced with more content
   tips: [
     {
       _type: "tip",
@@ -299,11 +366,61 @@ const seedData = {
       content: [
         {
           _type: "block",
+          style: "h2",
+          children: [
+            {
+              _type: "span",
+              text: "Panduan Lengkap Netflix Premium",
+            },
+          ],
+        },
+        {
+          _type: "block",
           style: "normal",
           children: [
             {
               _type: "span",
-              text: "Netflix Premium menawarkan berbagai fitur yang bisa Anda manfaatkan untuk pengalaman streaming terbaik.",
+              text: "Netflix Premium menawarkan berbagai fitur yang bisa Anda manfaatkan untuk pengalaman streaming terbaik. Berikut adalah tips untuk memaksimalkannya:",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "1. Atur Profil untuk Setiap Anggota Keluarga",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Setiap profil akan mendapatkan rekomendasi yang disesuaikan dengan preferensi masing-masing pengguna. Gunakan fitur Kids Profile untuk anak-anak agar konten yang ditampilkan sesuai usia.",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "2. Download untuk Ditonton Offline",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Manfaatkan fitur download untuk menonton di perjalanan tanpa koneksi internet. Anda bisa download hingga 100 judul per perangkat.",
             },
           ],
         },
@@ -311,6 +428,254 @@ const seedData = {
       author: "Admin JustDit",
       publishedAt: "2025-12-13T00:00:00.000Z",
       order: 0,
+      isActive: true,
+    },
+    {
+      _type: "tip",
+      title: "5 Playlist Spotify yang Wajib Kamu Dengerin di 2025",
+      slug: {
+        _type: "slug",
+        current: "5-playlist-spotify-wajib-2025",
+      },
+      excerpt:
+        "Rekomendasi playlist Spotify terbaik untuk menemani hari-harimu, dari chill vibes sampai workout energy",
+      category: "Music",
+      content: [
+        {
+          _type: "block",
+          style: "h2",
+          children: [
+            {
+              _type: "span",
+              text: "Playlist Spotify Terbaik 2025",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Spotify Premium memberikan akses ke jutaan lagu dan podcast. Berikut adalah 5 playlist yang wajib kamu coba:",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "1. Today's Top Hits",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Selalu update dengan lagu-lagu terbaru yang sedang viral di seluruh dunia. Perfect untuk yang suka mengikuti tren musik terkini.",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "2. Chill Lofi Study Beats",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Musik lofi yang menenangkan, cocok untuk menemani sesi belajar atau bekerja. Tanpa lirik yang mengganggu konsentrasi.",
+            },
+          ],
+        },
+      ],
+      author: "Admin JustDit",
+      publishedAt: "2025-12-12T00:00:00.000Z",
+      order: 1,
+      isActive: true,
+    },
+    {
+      _type: "tip",
+      title: "Canva Pro: Tutorial Membuat Desain Instagram Keren",
+      slug: {
+        _type: "slug",
+        current: "canva-pro-tutorial-desain-instagram",
+      },
+      excerpt:
+        "Panduan lengkap menggunakan Canva Pro untuk membuat konten Instagram yang menarik dan profesional",
+      category: "Design",
+      content: [
+        {
+          _type: "block",
+          style: "h2",
+          children: [
+            {
+              _type: "span",
+              text: "Membuat Konten Instagram dengan Canva Pro",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Canva Pro adalah tool desain yang sangat powerful untuk content creator. Dengan fitur-fitur premiumnya, kamu bisa membuat desain profesional tanpa skill desain grafis.",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "Fitur Unggulan Canva Pro",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Background remover untuk menghapus background foto secara otomatis, Brand kit untuk konsistensi visual, dan akses ke 100+ juta foto premium.",
+            },
+          ],
+        },
+      ],
+      author: "Admin JustDit",
+      publishedAt: "2025-12-11T00:00:00.000Z",
+      order: 2,
+      isActive: true,
+    },
+    {
+      _type: "tip",
+      title: "ChatGPT Plus: 10 Prompt yang Bikin Kerjaan Lebih Cepat",
+      slug: {
+        _type: "slug",
+        current: "chatgpt-plus-10-prompt-produktif",
+      },
+      excerpt:
+        "Kumpulan prompt ChatGPT Plus yang bisa menghemat waktu dan meningkatkan produktivitas kerjamu",
+      category: "AI & Productivity",
+      content: [
+        {
+          _type: "block",
+          style: "h2",
+          children: [
+            {
+              _type: "span",
+              text: "Maksimalkan ChatGPT Plus untuk Produktivitas",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "ChatGPT Plus dengan GPT-4 memberikan hasil yang lebih akurat dan kreatif. Berikut adalah prompt-prompt yang bisa kamu gunakan:",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "1. Email Professional Generator",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Gunakan prompt: 'Buatkan email profesional untuk [tujuan] kepada [penerima] dengan tone [formal/casual]' untuk membuat email bisnis yang sempurna.",
+            },
+          ],
+        },
+      ],
+      author: "Admin JustDit",
+      publishedAt: "2025-12-10T00:00:00.000Z",
+      order: 3,
+      isActive: true,
+    },
+    {
+      _type: "tip",
+      title: "YouTube Premium: Fitur Tersembunyi yang Jarang Orang Tahu",
+      slug: {
+        _type: "slug",
+        current: "youtube-premium-fitur-tersembunyi",
+      },
+      excerpt:
+        "Discover hidden features dari YouTube Premium yang bisa bikin experience nonton YouTube-mu lebih maksimal",
+      category: "Streaming",
+      content: [
+        {
+          _type: "block",
+          style: "h2",
+          children: [
+            {
+              _type: "span",
+              text: "Fitur Tersembunyi YouTube Premium",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Selain bebas iklan, YouTube Premium punya banyak fitur keren yang jarang diketahui orang. Yuk kita explore!",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "h3",
+          children: [
+            {
+              _type: "span",
+              text: "1. Background Playback",
+            },
+          ],
+        },
+        {
+          _type: "block",
+          style: "normal",
+          children: [
+            {
+              _type: "span",
+              text: "Dengarkan musik atau podcast sambil buka aplikasi lain atau layar mati. Perfect untuk menghemat baterai.",
+            },
+          ],
+        },
+      ],
+      author: "Admin JustDit",
+      publishedAt: "2025-12-09T00:00:00.000Z",
+      order: 4,
       isActive: true,
     },
   ],
@@ -361,7 +726,7 @@ const seedData = {
 };
 
 async function seedSanity() {
-  console.log("🌱 Starting Sanity seeding...\n");
+  console.log("🌱 Starting Sanity seeding with enhanced data...\n");
 
   try {
     // Create or update homepage
@@ -389,14 +754,14 @@ async function seedSanity() {
     );
 
     // Create Products
-    console.log("🛍️ Creating products...");
+    console.log("🛍️ Creating products with logos...");
     for (const product of seedData.products) {
       await client.create(product);
     }
     console.log(`✅ ${seedData.products.length} products created\n`);
 
     // Create Promos
-    console.log("🎉 Creating promos...");
+    console.log("🎉 Creating promos with images...");
     for (const promo of seedData.promos) {
       await client.create(promo);
     }
@@ -410,7 +775,7 @@ async function seedSanity() {
     console.log(`✅ ${seedData.bundles.length} bundles created\n`);
 
     // Create Tips
-    console.log("💡 Creating tips...");
+    console.log("💡 Creating tips & tricks...");
     for (const tip of seedData.tips) {
       await client.create(tip);
     }
@@ -429,12 +794,12 @@ async function seedSanity() {
     console.log(`   - 1 Contact Info`);
     console.log(`   - 1 CTA`);
     console.log(`   - ${seedData.whyUsFeatures.length} Why Us Features`);
-    console.log(`   - ${seedData.products.length} Products`);
-    console.log(`   - ${seedData.promos.length} Promos`);
+    console.log(`   - ${seedData.products.length} Products (with logos)`);
+    console.log(`   - ${seedData.promos.length} Promos (with images)`);
     console.log(`   - ${seedData.bundles.length} Bundles`);
-    console.log(`   - ${seedData.tips.length} Tips`);
+    console.log(`   - ${seedData.tips.length} Tips & Tricks`);
     console.log(`   - ${seedData.faqs.length} FAQs`);
-    console.log("\n✨ Your Sanity studio is now populated with sample data!");
+    console.log("\n✨ Your Sanity studio is now populated with enhanced data!");
     console.log("🔗 Visit: http://localhost:3333 to manage your content");
   } catch (error) {
     console.error("❌ Error seeding Sanity:", error);

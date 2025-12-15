@@ -12,6 +12,7 @@ interface Promo {
       _type: string;
     };
   };
+  imageUrl?: string;
   bgColor: string;
   buttonLink?: string;
   order: number;
@@ -27,6 +28,7 @@ export interface Product {
   features?: string[];
   image?: any;
   logo?: any;
+  imageUrl?: string;
   bgColor?: string;
   plans: {
     name: string;
@@ -142,6 +144,7 @@ export async function getPromos(): Promise<Promo[]> {
     promoTitle,
     validUntil,
     image,
+    imageUrl,
     bgColor,
     buttonLink,
     order,
@@ -185,6 +188,7 @@ export async function getProducts(featured?: boolean): Promise<Product[]> {
     features,
     image,
     logo,
+    imageUrl,
     bgColor,
     plans,
     isFeatured,
