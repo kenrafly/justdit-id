@@ -99,9 +99,9 @@ export default function PromoCarousel({
   };
 
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] max-h-[400px] sm:max-h-[500px] mb-8 sm:mb-16 group">
+    <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] max-h-[400px] sm:max-h-[500px] mb-1 sm:mb-16 group">
       {/* Carousel Container */}
-      <div className="relative h-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-2xl">
+      <div className="relative h-full overflow-hidden rounded-lg sm:rounded-3xl shadow-2xl">
         {displayPromos.map((promo, index) => (
           <div
             key={promo._id}

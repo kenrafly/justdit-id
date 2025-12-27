@@ -29,10 +29,10 @@ export default function WhyUs({ data, whyUsFeatures }: WhyUsProps) {
     whyUsFeatures && whyUsFeatures.length > 0 ? whyUsFeatures : defaultFeatures;
 
   return (
-    <section className="py-2 sm:py-6 bg-[#041A2F]">
+    <section className="py-0 sm:py-6 bg-[#041A2F]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {(data?.whyUsHeading || data?.whyUsSubheading) && (
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 hidden sm:block">
             {data?.whyUsHeading && (
               <h2 className="text-3xl font-bold text-white mb-3">
                 {data.whyUsHeading}

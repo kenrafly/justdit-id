@@ -317,14 +317,14 @@ export default function PopularProducts({
               {products.map((product, index) => (
                 <div
                   key={index}
-                  className={`bg-[#28529C] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-700 shadow-xl hover:shadow-2xl w-64 sm:w-80 flex-shrink-0 ${
+                  className={`bg-[#28529C] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-700 shadow-xl hover:shadow-2xl w-40 sm:w-56 flex-shrink-0 flex flex-col ${
                     isVisible
                       ? "opacity-100 translate-x-0"
                       : "opacity-0 translate-x-52"
                   }`}
-                  style={{ transitionDelay: `${index * 150}ms` }}
+                  style={{ transitionDelay: `${index * 150}ms`, aspectRatio: '9/16' }}
                 >
-                  <div className="relative h-40 sm:h-48 bg-linear-to-br from-[#28529C] to-[#1e3d7a]">
+                  <div className="relative flex-1 bg-linear-to-br from-[#28529C] to-[#1e3d7a]">
                     <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-10">
                       <span className="bg-yellow-500 text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
                         {product.badge}
@@ -335,11 +335,11 @@ export default function PopularProducts({
                         src={product.imageUrl}
                         alt={product.name}
                         fill
-                        className="object-contain p-8"
+                        className="object-contain p-6 sm:p-8"
                       />
                     ) : product.image?.asset ? (
                       <Image
-                        src={urlFor(product.image).width(400).height(300).url()}
+                        src={urlFor(product.image).width(400).height(600).url()}
                         alt={product.name}
                         fill
                         className="object-cover"
@@ -351,33 +351,26 @@ export default function PopularProducts({
                     )}
                   </div>
 
-                  <div className="p-3 sm:p-6">
-                    <h3 className="text-base sm:text-2xl font-bold text-white mb-1 sm:mb-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-gray-300 text-xs sm:text-base mb-2 sm:mb-4">
-                      {product.description}
-                    </p>
-
-                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                  <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3">
+                    <div className="flex items-end justify-between">
                       <div>
-                        <div className="text-base sm:text-2xl font-bold text-white">
+                        <div className="text-base sm:text-xl font-bold text-white">
                           {product.price}
                         </div>
-                        <div className="text-[10px] sm:text-sm text-gray-400">
+                        <div className="text-[10px] sm:text-xs text-gray-300">
                           {product.duration}
                         </div>
                       </div>
-                      <div className="text-yellow-400 text-xs sm:text-sm">
+                      <div className="text-yellow-400 text-xs sm:text-sm font-semibold">
                         ⭐ 4.9
                       </div>
                     </div>
 
                     <Link
                       href="#contact"
-                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-2 sm:py-3 rounded-full text-xs sm:text-base font-semibold transition-colors"
+                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-colors"
                     >
-                      Pesan Sekarang
+                      Pesan
                     </Link>
                   </div>
                 </div>
@@ -424,9 +417,10 @@ export default function PopularProducts({
             {paginatedProducts.map((product, index) => (
               <div
                 key={`${product.name}-${index}`}
-                className="bg-[#1a4573] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                className="bg-[#1a4573] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col"
+                style={{ aspectRatio: '9/16' }}
               >
-                <div className="relative h-32 sm:h-40 bg-linear-to-br from-[#1a4573] to-[#112E56]">
+                <div className="relative flex-1 bg-linear-to-br from-[#1a4573] to-[#112E56]">
                   <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
                     <span className="bg-yellow-500 text-black px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
                       {product.badge}
@@ -437,11 +431,11 @@ export default function PopularProducts({
                       src={product.imageUrl}
                       alt={product.name}
                       fill
-                      className="object-contain p-6"
+                      className="object-contain p-4 sm:p-6"
                     />
                   ) : product.image?.asset ? (
                     <Image
-                      src={urlFor(product.image).width(400).height(300).url()}
+                      src={urlFor(product.image).width(400).height(600).url()}
                       alt={product.name}
                       fill
                       className="object-cover"
@@ -453,24 +447,17 @@ export default function PopularProducts({
                   )}
                 </div>
 
-                <div className="p-3 sm:p-5">
-                  <h3 className="text-sm sm:text-xl font-bold text-white mb-1 sm:mb-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-3">
-                    {product.description}
-                  </p>
-
-                  <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3">
+                  <div className="flex items-end justify-between">
                     <div>
-                      <div className="text-sm sm:text-xl font-bold text-white">
+                      <div className="text-sm sm:text-lg font-bold text-white">
                         {product.price}
                       </div>
-                      <div className="text-[10px] sm:text-xs text-gray-400">
+                      <div className="text-[10px] sm:text-xs text-gray-300">
                         {product.duration}
                       </div>
                     </div>
-                    <div className="text-yellow-400 text-xs sm:text-sm">
+                    <div className="text-yellow-400 text-xs sm:text-sm font-semibold">
                       ⭐ 4.9
                     </div>
                   </div>
