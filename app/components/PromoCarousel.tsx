@@ -16,6 +16,7 @@ interface Promo {
   bgColor: string;
   buttonLink?: string;
   order: number;
+  discount?: string;
 }
 
 // Fallback promos when Sanity is empty
@@ -29,6 +30,7 @@ const fallbackPromos: Promo[] = [
     validUntil: "2025-12-31",
     image: null,
     order: 0,
+    discount: "50%",
   },
   {
     _id: "2",
@@ -39,6 +41,7 @@ const fallbackPromos: Promo[] = [
     validUntil: "2025-12-25",
     image: null,
     order: 1,
+    discount: "40%",
   },
   {
     _id: "3",
@@ -49,6 +52,7 @@ const fallbackPromos: Promo[] = [
     validUntil: "2025-12-30",
     image: null,
     order: 2,
+    discount: "30%",
   },
 ];
 
@@ -84,7 +88,7 @@ export default function PromoCarousel({
 
   const prevSlide = () => {
     setCurrentSlide(
-      (prev) => (prev - 1 + displayPromos.length) % displayPromos.length
+      (prev) => (prev - 1 + displayPromos.length) % displayPromos.length,
     );
   };
 
@@ -105,7 +109,7 @@ export default function PromoCarousel({
         {displayPromos.map((promo, index) => (
           <div
             key={promo._id}
-            className={`absolute inset-0 transition-all duration-700 ease-in-out flex flex-col ${
+            className={`absolute inset-0 transition-all duration-700 ease-in-out ${
               index === currentSlide
                 ? "opacity-100 translate-x-0"
                 : index < currentSlide
@@ -113,12 +117,12 @@ export default function PromoCarousel({
                   : "opacity-0 translate-x-full"
             }`}
           >
-            {/* Background Image Container */}
-            <div className="relative flex-1 bg-gradient-to-br from-[#041A2F] to-[#28529C]">
+            {/* Background Image Container - Full Size */}
+            <div className="relative w-full h-full bg-gradient-to-br from-[#041A2F] to-[#28529C]">
               {promo.imageUrl ? (
                 <Image
                   src={promo.imageUrl}
-                  alt={promo.title}
+                  alt={promo.title || promo.promoTitle || "Promo Banner"}
                   fill
                   className="object-cover"
                   priority={index === 0}
@@ -127,39 +131,25 @@ export default function PromoCarousel({
                 promo.image && (
                   <Image
                     src={urlFor(promo.image).width(1920).height(1080).url()}
-                    alt={promo.title}
+                    alt={promo.title || promo.promoTitle || "Promo Banner"}
                     fill
-                    className="object-contain"
+                    className="object-cover"
                     priority={index === 0}
                   />
                 )
               )}
-            </div>
 
-            {/* Bottom Info Bar */}
-            <div className="h-[20%] sm:h-[18%] bg-[#727271]/90 backdrop-blur-md flex items-center justify-between px-3 sm:px-6 md:px-12 gap-2 sm:gap-4">
-              <div className="flex flex-col min-w-0 flex-1">
-                <h3 className="text-white font-bold text-sm sm:text-lg md:text-xl mb-0.5 sm:mb-1 truncate">
-                  {promo.promoTitle}
-                </h3>
-                <p className="text-white/80 text-xs sm:text-sm md:text-base truncate">
-                  Berlaku hingga: {formatDate(promo.validUntil)}
-                </p>
+              {/* Discount Badge - Bottom Right */}
+              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-white text-[#214782] px-4 py-1.5 sm:px-6 sm:py-2 rounded-lg shadow-2xl z-10">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <p className="text-xs sm:text-sm font-semibold uppercase tracking-wide">
+                    Diskon
+                  </p>
+                  <p className="text-xl sm:text-2xl font-bold">
+                    {promo.discount || "50%"}
+                  </p>
+                </div>
               </div>
-              {promo.buttonLink ? (
-                <a
-                  href={promo.buttonLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-3 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-base transition-all transform hover:scale-105 whitespace-nowrap shrink-0"
-                >
-                  Dapatkan
-                </a>
-              ) : (
-                <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold px-3 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-base transition-all transform hover:scale-105 whitespace-nowrap shrink-0">
-                  Dapatkan
-                </button>
-              )}
             </div>
           </div>
         ))}

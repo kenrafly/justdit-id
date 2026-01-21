@@ -80,6 +80,7 @@ export interface WhyUsFeature {
   icon: string;
   title: string;
   description: string;
+  image?: any;
   order: number;
   isActive: boolean;
 }

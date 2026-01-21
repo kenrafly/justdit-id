@@ -16,6 +16,7 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
       bundlePrice: 55000,
       discount: "18%",
       badge: "Hemat Rp 12.000",
+      duration: "30 Hari",
     },
     {
       name: "Paket Entertainment",
@@ -25,6 +26,7 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
       bundlePrice: 48000,
       discount: "17%",
       badge: "Hemat Rp 10.000",
+      duration: "30 Hari",
     },
     {
       name: "Paket Produktif",
@@ -34,6 +36,22 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
       bundlePrice: 62000,
       discount: "17%",
       badge: "Hemat Rp 13.000",
+      duration: "30 Hari",
+    },
+    {
+      name: "Paket Ultimate",
+      description: "Semua yang Anda butuhkan",
+      products: [
+        "Netflix Premium",
+        "Spotify Premium",
+        "Canva Pro",
+        "YouTube Premium",
+      ],
+      originalPrice: 95000,
+      bundlePrice: 75000,
+      discount: "21%",
+      badge: "Hemat Rp 20.000",
+      duration: "30 Hari",
     },
   ];
 
@@ -42,7 +60,12 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {data?.bundlingHeading || "Paket Bundling Hemat"}
+            {
+              <>
+                Paket Bundling Hemat Sampai{" "}
+                <span className="text-[#214782]">50%</span>
+              </>
+            }
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
             {data?.bundlingSubheading ||
@@ -50,188 +73,198 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          {/* Left Side - 4 small bundles in 2x2 grid */}
-          <div className="grid grid-cols-2 gap-1">
-            {bundles.slice(0, 3).map((bundle, index) => (
-              <div
-                key={index}
-                className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col"
-              >
-                <div className="relative flex-1 bg-linear-to-br from-[#28529C] to-[#1e3d7a] p-4 sm:p-6">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-white/10 rounded-lg flex items-center justify-center">
-                      <div className="text-3xl sm:text-5xl md:text-6xl">
-                        {index === 0 ? "🎬" : index === 1 ? "🎵" : "💼"}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-2 sm:p-3 md:p-4 flex flex-col">
-                  <div className="border-t border-white/20 pt-2 mt-2">
-                    <div className="flex items-end gap-1 sm:gap-2 mb-2">
-                      <div>
-                        <div className="text-[10px] text-gray-300 mb-0.5">
-                          {bundle.name}
-                        </div>
-                        <div className="text-[10px] sm:text-xs text-gray-400 line-through">
-                          Rp {bundle.originalPrice.toLocaleString("id-ID")}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-[10px] text-gray-300 mb-0.5">
-                          Diskon
-                        </div>
-                        <div className="bg-red-500 text-white text-sm sm:text-lg font-bold px-2 py-1 rounded-lg">
-                          Rp {bundle.bundlePrice.toLocaleString("id-ID")}
-                        </div>
-                        <div className="text-yellow-400 text-xs sm:text-sm mt-1">
-                          ⭐ 4.9
-                        </div>
-                      </div>
-                    </div>
-
-                    <Link
-                      href="#contact"
-                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-1 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold transition-colors"
-                    >
-                      Ambil Paket
-                    </Link>
-                  </div>
+        <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
+          {/* Bundle 1 - Streaming */}
+          <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-3xl">
+            <div className="flex aspect-[16/9]">
+              <div className="w-1/2 bg-linear-to-br from-[#28529C] to-[#1e3d7a] p-3 md:p-6 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-24 md:h-24 bg-white/10 rounded-xl flex items-center justify-center">
+                  <div className="text-4xl md:text-6xl">🎬</div>
                 </div>
               </div>
-            ))}
-
-            {/* Add 4th bundle placeholder */}
-            <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-lg md:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col">
-              <div className="relative flex-1 bg-linear-to-br from-[#28529C] to-[#1e3d7a] p-4 sm:p-6">
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-white/10 rounded-lg flex items-center justify-center">
-                    <div className="text-3xl sm:text-5xl md:text-6xl">✨</div>
+              <div className="w-1/2 p-2 md:p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2">
+                    {bundles[0].name}
+                  </h3>
+                  <div className="space-y-0.5 md:space-y-1 mb-1 md:mb-2">
+                    {bundles[0].products.map((product, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-1 text-white text-[10px] md:text-xs"
+                      >
+                        <span>✓</span>
+                        <span>{product}</span>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </div>
-              <div className="p-2 sm:p-3 md:p-4 flex flex-col">
-                <div className="border-t border-white/20 pt-2 mt-2">
-                  <div className="flex items-end gap-1 sm:gap-2 mb-2">
-                    <div>
-                      <div className="text-[10px] text-gray-300 mb-0.5">
-                        Paket Custom
-                      </div>
-                      <div className="text-[10px] sm:text-xs text-gray-400">
-                        -
-                      </div>
+                  <div className="bg-red-500 text-white text-base md:text-xl font-bold px-2 md:px-3 py-1 md:py-1.5 rounded-lg inline-block mb-0.5 md:mb-1">
+                    Rp {bundles[0].bundlePrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-400 line-through mb-0.5 md:mb-1">
+                    Rp {bundles[0].originalPrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="flex items-center justify-between mb-1 md:mb-2">
+                    <div className="text-[10px] md:text-xs text-gray-300">
+                      Durasi: {bundles[0].duration}
                     </div>
-                    <div>
-                      <div className="text-[10px] text-gray-300 mb-0.5">
-                        Mulai dari
-                      </div>
-                      <div className="bg-red-500 text-white text-sm sm:text-lg font-bold px-2 py-1 rounded-lg">
-                        Rp 50.000
-                      </div>
-                      <div className="text-yellow-400 text-xs sm:text-sm mt-1">
-                        ⭐ 4.9
-                      </div>
+                    <div className="text-yellow-400 text-xs md:text-sm">
+                      ⭐ 4.9
                     </div>
                   </div>
-
-                  <Link
-                    href="#contact"
-                    className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-1 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold transition-colors"
-                  >
-                    Request Custom
-                  </Link>
                 </div>
+                <Link
+                  href="#contact"
+                  className="block w-full bg-white hover:bg-gray-100 text-[#214782] text-center py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold transition-colors"
+                >
+                  Ambil Paket
+                </Link>
               </div>
             </div>
           </div>
 
-          {/* Right Side - 1 large featured bundle */}
-          <div className="bg-linear-to-br from-yellow-500 via-orange-500 to-red-500 rounded-2xl md:rounded-3xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-3xl">
-            {/* Mobile View - Horizontal Layout */}
-            <div className="flex md:hidden">
-              {/* Left - Image */}
-              <div className="w-1/2 bg-linear-to-br from-yellow-500 via-orange-500 to-red-500 p-4 flex items-center justify-center">
-                <div className="w-20 h-20 bg-white/10 rounded-xl flex items-center justify-center">
-                  <div className="text-5xl">🏆</div>
+          {/* Bundle 2 - Entertainment */}
+          <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-3xl">
+            <div className="flex aspect-[16/9]">
+              <div className="w-1/2 bg-linear-to-br from-[#28529C] to-[#1e3d7a] p-3 md:p-6 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-24 md:h-24 bg-white/10 rounded-xl flex items-center justify-center">
+                  <div className="text-4xl md:text-6xl">🎵</div>
                 </div>
               </div>
-
-              {/* Right - Info */}
-              <div className="w-1/2 p-3 flex flex-col justify-between">
+              <div className="w-1/2 p-2 md:p-4 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-white mb-1">
-                    Paket Ultimate
+                  <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2">
+                    {bundles[1].name}
                   </h3>
-                  <div className="space-y-0.5 mb-2">
-                    <div className="flex items-center gap-1 text-white text-[9px]">
-                      <span>✓</span>
-                      <span>Netflix + Disney+</span>
+                  <div className="space-y-0.5 md:space-y-1 mb-1 md:mb-2">
+                    {bundles[1].products.map((product, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-1 text-white text-[10px] md:text-xs"
+                      >
+                        <span>✓</span>
+                        <span>{product}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-red-500 text-white text-base md:text-xl font-bold px-2 md:px-3 py-1 md:py-1.5 rounded-lg inline-block mb-0.5 md:mb-1">
+                    Rp {bundles[1].bundlePrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-400 line-through mb-0.5 md:mb-1">
+                    Rp {bundles[1].originalPrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="flex items-center justify-between mb-1 md:mb-2">
+                    <div className="text-[10px] md:text-xs text-gray-300">
+                      Masa Berlaku: {bundles[1].duration}
                     </div>
-                    <div className="flex items-center gap-1 text-white text-[9px]">
-                      <span>✓</span>
-                      <span>Spotify + YouTube</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-white text-[9px]">
-                      <span>✓</span>
-                      <span>Canva + Adobe</span>
+                    <div className="text-yellow-400 text-xs md:text-sm">
+                      ⭐ 4.9
                     </div>
                   </div>
-                  <div className="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-lg inline-block mb-1">
-                    Rp 187.000
-                  </div>
-                  <div className="text-[9px] text-white/80">30 Hari</div>
-                  <div className="text-yellow-400 text-xs">⭐ 5.0</div>
                 </div>
                 <Link
                   href="#contact"
-                  className="block w-full bg-white hover:bg-gray-100 text-orange-600 text-center py-1.5 rounded-full text-[10px] font-bold transition-colors"
+                  className="block w-full bg-white hover:bg-gray-100 text-[#214782] text-center py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold transition-colors"
                 >
-                  Pesan
+                  Ambil Paket
                 </Link>
               </div>
             </div>
+          </div>
 
-            {/* Desktop View - Vertical Layout */}
-            <div className="hidden md:flex flex-col">
-              <div className="relative flex-1 bg-linear-to-br from-yellow-500 via-orange-500 to-red-500 p-8 sm:p-12">
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="w-32 h-32 sm:w-48 sm:h-48 bg-white/10 rounded-2xl flex items-center justify-center">
-                    <div className="text-7xl sm:text-8xl">🏆</div>
-                  </div>
+          {/* Bundle 3 - Produktif */}
+          <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-3xl">
+            <div className="flex aspect-[16/9]">
+              <div className="w-1/2 bg-linear-to-br from-[#28529C] to-[#1e3d7a] p-3 md:p-6 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-24 md:h-24 bg-white/10 rounded-xl flex items-center justify-center">
+                  <div className="text-4xl md:text-6xl">💼</div>
                 </div>
               </div>
-              <div className="p-6 sm:p-8 lg:p-10 flex flex-col">
-                <div className="border-t-2 border-white/30 pt-6 mb-6">
-                  <div className="flex items-end justify-between mb-2">
-                    <div>
-                      <div className="text-base text-white/80 mb-2">
-                        Paket Ultimate
+              <div className="w-1/2 p-2 md:p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2">
+                    {bundles[2].name}
+                  </h3>
+                  <div className="space-y-0.5 md:space-y-1 mb-1 md:mb-2">
+                    {bundles[2].products.map((product, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-1 text-white text-[10px] md:text-xs"
+                      >
+                        <span>✓</span>
+                        <span>{product}</span>
                       </div>
-                      <div className="text-3xl text-white/70 line-through">
-                        Rp 250.000
-                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-red-500 text-white text-base md:text-xl font-bold px-2 md:px-3 py-1 md:py-1.5 rounded-lg inline-block mb-0.5 md:mb-1">
+                    Rp {bundles[2].bundlePrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-400 line-through mb-0.5 md:mb-1">
+                    Rp {bundles[2].originalPrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="flex items-center justify-between mb-1 md:mb-2">
+                    <div className="text-[10px] md:text-xs text-gray-300">
+                      Masa Berlaku: {bundles[2].duration}
                     </div>
-                    <div className="text-right">
-                      <div className="text-base text-white/80 mb-2">
-                        Harga Diskon
-                      </div>
-                      <div className="bg-red-500 text-white text-5xl font-bold px-4 py-2 rounded-xl inline-block">
-                        Rp 187.000
-                      </div>
-                      <div className="text-yellow-400 text-lg mt-2">⭐ 5.0</div>
+                    <div className="text-yellow-400 text-xs md:text-sm">
+                      ⭐ 4.9
                     </div>
                   </div>
-                  <p className="text-white/90 text-sm text-center mt-2">
-                    Hemat Rp 63.000 per bulan! 🎉
-                  </p>
                 </div>
-
                 <Link
                   href="#contact"
-                  className="block w-full bg-white hover:bg-gray-100 text-orange-600 text-center py-4 rounded-full text-xl font-bold transition-colors shadow-lg"
+                  className="block w-full bg-white hover:bg-gray-100 text-[#214782] text-center py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold transition-colors"
                 >
-                  🚀 Ambil Paket Sekarang!
+                  Ambil Paket
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Bundle 4 - Ultimate */}
+          <div className="bg-linear-to-br from-[#28529C] to-[#1e3d7a] rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-3xl">
+            <div className="flex aspect-[16/9]">
+              <div className="w-1/2 bg-linear-to-br from-[#28529C] to-[#1e3d7a] p-3 md:p-6 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-24 md:h-24 bg-white/10 rounded-xl flex items-center justify-center">
+                  <div className="text-4xl md:text-6xl">🚀</div>
+                </div>
+              </div>
+              <div className="w-1/2 p-2 md:p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2">
+                    {bundles[3].name}
+                  </h3>
+                  <div className="space-y-0.5 md:space-y-1 mb-1 md:mb-2">
+                    {bundles[3].products.map((product, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-1 text-white text-[10px] md:text-xs"
+                      >
+                        <span>✓</span>
+                        <span>{product}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="bg-red-500 text-white text-base md:text-xl font-bold px-2 md:px-3 py-1 md:py-1.5 rounded-lg inline-block mb-0.5 md:mb-1">
+                    Rp {bundles[3].bundlePrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="text-xs md:text-sm text-gray-400 line-through mb-0.5 md:mb-1">
+                    Rp {bundles[3].originalPrice.toLocaleString("id-ID")}
+                  </div>
+                  <div className="flex items-center justify-between mb-1 md:mb-2">
+                    <div className="text-[10px] md:text-xs text-gray-300">
+                      Masa Berlaku: {bundles[3].duration}
+                    </div>
+                    <div className="text-yellow-400 text-xs md:text-sm">
+                      ⭐ 5.0
+                    </div>
+                  </div>
+                </div>
+                <Link
+                  href="#contact"
+                  className="block w-full bg-white hover:bg-gray-100 text-[#214782] text-center py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold transition-colors"
+                >
+                  Ambil Paket
                 </Link>
               </div>
             </div>

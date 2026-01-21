@@ -175,7 +175,7 @@ export default function PopularProducts({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedProducts = filteredProducts.slice(
     startIndex,
-    startIndex + itemsPerPage
+    startIndex + itemsPerPage,
   );
 
   const handleCategoryChange = (category: ProductCategory) => {
@@ -193,7 +193,7 @@ export default function PopularProducts({
       setCanScrollLeft(container.scrollLeft > 0);
       setCanScrollRight(
         container.scrollLeft <
-          container.scrollWidth - container.clientWidth - 10
+          container.scrollWidth - container.clientWidth - 10,
       );
     }
   };
@@ -219,7 +219,7 @@ export default function PopularProducts({
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
@@ -254,11 +254,8 @@ export default function PopularProducts({
           }`}
         >
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight">
-            Produk Paling Populer
+            Produk Best Seller
           </h2>
-          <p className="text-gray-300 text-sm sm:text-base lg:text-lg">
-            Pilihan favorit pelanggan dengan rating tertinggi
-          </p>
         </div>
 
         {/* Products Grid */}
@@ -317,7 +314,7 @@ export default function PopularProducts({
               {products.map((product, index) => (
                 <div
                   key={index}
-                  className={`bg-[#28529C] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-700 shadow-xl hover:shadow-2xl w-40 sm:w-56 flex-shrink-0 flex flex-col ${
+                  className={`bg-[#28529C] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-700 shadow-xl hover:shadow-2xl w-56 sm:w-80 flex-shrink-0 relative ${
                     isVisible
                       ? "opacity-100 translate-x-0"
                       : "opacity-0 translate-x-52"
@@ -327,18 +324,14 @@ export default function PopularProducts({
                     aspectRatio: "9/16",
                   }}
                 >
-                  <div className="relative flex-1 bg-linear-to-br from-[#28529C] to-[#1e3d7a]">
-                    <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-10">
-                      <span className="bg-yellow-500 text-black px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
-                        {product.badge}
-                      </span>
-                    </div>
+                  {/* Image fills entire card */}
+                  <div className="absolute inset-0 bg-linear-to-br from-[#28529C] to-[#1e3d7a]">
                     {product.imageUrl ? (
                       <Image
                         src={product.imageUrl}
                         alt={product.name}
                         fill
-                        className="object-contain p-6 sm:p-8"
+                        className="object-cover"
                       />
                     ) : product.image?.asset ? (
                       <Image
@@ -354,7 +347,8 @@ export default function PopularProducts({
                     )}
                   </div>
 
-                  <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3">
+                  {/* Text overlay at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 bg-gradient-to-t from-black/80 to-transparent">
                     <div className="flex items-end justify-between">
                       <div>
                         <div className="text-base sm:text-xl font-bold text-white">
@@ -364,14 +358,17 @@ export default function PopularProducts({
                           {product.duration}
                         </div>
                       </div>
-                      <div className="text-yellow-400 text-xs sm:text-sm font-semibold">
-                        ⭐ 4.9
+                      <div className="flex items-center gap-1 bg-yellow-400/20 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-yellow-400/30">
+                        <span className="text-base sm:text-xl">⭐</span>
+                        <span className="text-sm sm:text-lg font-bold text-yellow-400">
+                          4.9
+                        </span>
                       </div>
                     </div>
 
                     <Link
                       href="#contact"
-                      className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-colors"
+                      className="block w-full bg-white hover:bg-gray-200 text-[#214782] text-center py-2 sm:py-2.5 rounded-lg text-sm sm:text-base font-semibold transition-colors"
                     >
                       Pesan
                     </Link>
@@ -420,21 +417,17 @@ export default function PopularProducts({
             {paginatedProducts.map((product, index) => (
               <div
                 key={`${product.name}-${index}`}
-                className="bg-[#1a4573] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col"
-                style={{ aspectRatio: "9/16" }}
+                className="bg-[#1a4573] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl relative"
+                style={{ aspectRatio: "1/1" }}
               >
-                <div className="relative flex-1 bg-linear-to-br from-[#1a4573] to-[#112E56]">
-                  <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10">
-                    <span className="bg-yellow-500 text-black px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold">
-                      {product.badge}
-                    </span>
-                  </div>
+                {/* Image fills entire card */}
+                <div className="absolute inset-0 bg-linear-to-br from-[#1a4573] to-[#112E56]">
                   {product.imageUrl ? (
                     <Image
                       src={product.imageUrl}
                       alt={product.name}
                       fill
-                      className="object-contain p-4 sm:p-6"
+                      className="object-cover"
                     />
                   ) : product.image?.asset ? (
                     <Image
@@ -450,7 +443,8 @@ export default function PopularProducts({
                   )}
                 </div>
 
-                <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3">
+                {/* Text overlay at bottom */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 bg-gradient-to-t from-black/80 to-transparent">
                   <div className="flex items-end justify-between">
                     <div>
                       <div className="text-sm sm:text-lg font-bold text-white">
@@ -460,14 +454,17 @@ export default function PopularProducts({
                         {product.duration}
                       </div>
                     </div>
-                    <div className="text-yellow-400 text-xs sm:text-sm font-semibold">
-                      ⭐ 4.9
+                    <div className="flex items-center gap-1 bg-yellow-400/20 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-yellow-400/30">
+                      <span className="text-base sm:text-xl">⭐</span>
+                      <span className="text-sm sm:text-lg font-bold text-yellow-400">
+                        4.9
+                      </span>
                     </div>
                   </div>
 
                   <Link
                     href="#contact"
-                    className="block w-full bg-white hover:bg-gray-200 text-[#041A2F] text-center py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors"
+                    className="block w-full bg-white hover:bg-gray-200 text-[#214782] text-center py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-semibold transition-colors"
                   >
                     Pesan
                   </Link>
@@ -504,7 +501,7 @@ export default function PopularProducts({
                   >
                     {page}
                   </button>
-                )
+                ),
               )}
 
               <button

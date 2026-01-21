@@ -18,7 +18,7 @@ export default function Navbar() {
     } catch (error) {
       console.error(
         "Logout error:",
-        error instanceof Error ? error.message : String(error)
+        error instanceof Error ? error.message : String(error),
       );
     }
   };
@@ -30,7 +30,8 @@ export default function Navbar() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-4">
+          {/* Mobile: Hamburger Menu + Logo on Left */}
+          <div className="flex items-center gap-2 md:gap-4">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-white p-2 hover:bg-white/10 rounded-lg transition-colors md:hidden"
@@ -68,7 +69,7 @@ export default function Navbar() {
                 alt="JustDit.id Logo"
                 width={70}
                 height={30}
-                className="h-8 w-auto object-contain"
+                className="h-6 w-auto object-contain md:h-8"
                 priority
               />
             </Link>
@@ -102,6 +103,80 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-4">
+            {/* Mobile: Search, Cart & Masuk Buttons */}
+            <div className="flex md:hidden items-center gap-2">
+              {/* Search Button - Mobile */}
+              <button
+                onClick={() => {
+                  /* Add search functionality */
+                }}
+                className="text-white hover:text-blue-300 transition-colors p-2"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+
+              {/* Shopping Cart - Mobile */}
+              <button className="text-white hover:text-blue-300 transition-colors p-2 relative">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  0
+                </span>
+              </button>
+
+              {/* Masuk Button - Mobile */}
+              {user ? (
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="focus:outline-none"
+                >
+                  {user.photoURL ? (
+                    <Image
+                      src={user.photoURL}
+                      alt={user.displayName || "User"}
+                      width={32}
+                      height={32}
+                      className="rounded-full border-2 border-[#4E99BE] hover:border-[#3d7a99] transition-colors cursor-pointer"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-[#4E99BE] hover:bg-[#3d7a99] flex items-center justify-center text-white text-sm font-semibold transition-colors cursor-pointer">
+                      {user.email?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </button>
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-[#28529C] hover:bg-[#1e3d7a] text-white px-4 py-1.5 rounded-full font-semibold transition-colors text-sm"
+                >
+                  Masuk
+                </Link>
+              )}
+            </div>
+
             {/* Search Bar - Desktop Right */}
             <div className="hidden md:flex items-center bg-white/10 rounded-full px-4 py-2 border border-white/20 w-48 lg:w-64">
               <input
@@ -198,7 +273,7 @@ export default function Navbar() {
             )}
 
             {/* Shopping Cart */}
-            <button className="text-white hover:text-blue-300 transition-colors p-2 relative">
+            <button className="hidden md:block text-white hover:text-blue-300 transition-colors p-2 relative">
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -218,6 +293,38 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Profile Dropdown - Positioned Below Navbar */}
+        {isProfileOpen && user && (
+          <div className="md:hidden bg-[#28529C] rounded-lg shadow-xl border border-white/20 py-2 mt-2">
+            <div className="px-4 py-2 border-b border-white/20">
+              <p className="text-white font-semibold text-sm">
+                {user.displayName || "User"}
+              </p>
+              <p className="text-gray-400 text-xs truncate">{user.email}</p>
+              {userProfile && (
+                <p className="text-[#4E99BE] text-xs mt-1 capitalize">
+                  {userProfile.role}
+                </p>
+              )}
+            </div>
+            {userProfile && (
+              <Link
+                href={`/dashboard/${userProfile.role}`}
+                onClick={() => setIsProfileOpen(false)}
+                className="block w-full text-left px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-semibold"
+              >
+                Dashboard
+              </Link>
+            )}
+            <button
+              onClick={handleLogout}
+              className="w-full text-left px-4 py-2 text-red-400 hover:bg-white/10 transition-colors text-sm font-semibold"
+            >
+              Logout
+            </button>
+          </div>
+        )}
 
         {/* Mobile Menu */}
         <div
