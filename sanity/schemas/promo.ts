@@ -6,40 +6,22 @@ export default defineType({
   type: "document",
   fields: [
     defineField({
-      name: "promoTitle",
-      title: "Promo Title",
-      type: "string",
-      description: "Title shown in the bottom info bar",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: "validUntil",
-      title: "Valid Until",
-      type: "date",
-      description: "Promo expiration date",
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "image",
       title: "Promo Image",
       type: "image",
       description:
-        "Upload promo image (recommended: 1920x1080px). The image will be displayed clean without text overlay.",
+        "Upload promo image (recommended: 1920x1080px). The image will be displayed as carousel slide.",
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "imageUrl",
-      title: "Image URL (Alternative)",
-      type: "url",
-      description: "Direct image URL (use this OR upload image above)",
-    }),
-    defineField({
-      name: "buttonLink",
-      title: "Button Link",
-      type: "url",
-      description: 'Link when "Dapatkan" button is clicked (optional)',
+      name: "discount",
+      title: "Discount Amount",
+      type: "string",
+      description: 'Discount percentage (e.g., "50%", "40%", "30%")',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "order",
@@ -58,9 +40,16 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "promoTitle",
-      subtitle: "validUntil",
+      title: "discount",
+      subtitle: "order",
       media: "image",
+    },
+    prepare({ title, subtitle, media }) {
+      return {
+        title: `Discount ${title}`,
+        subtitle: `Order: ${subtitle}`,
+        media,
+      };
     },
   },
 });

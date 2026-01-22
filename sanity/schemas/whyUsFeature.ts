@@ -26,6 +26,16 @@ export default defineType({
       validation: (Rule) => Rule.required().max(100),
     }),
     defineField({
+      name: "image",
+      title: "Feature Image",
+      type: "image",
+      description: "Image for this feature card",
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "order",
       title: "Display Order",
       type: "number",

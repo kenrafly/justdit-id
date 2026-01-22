@@ -140,12 +140,12 @@ export default function PromoCarousel({
               )}
 
               {/* Discount Badge - Bottom Right */}
-              <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-white text-[#214782] px-4 py-1.5 sm:px-6 sm:py-2 rounded-lg shadow-2xl z-10">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <p className="text-xs sm:text-sm font-semibold uppercase tracking-wide">
+              <div className="absolute bottom-2 right-2 sm:bottom-6 sm:right-6 bg-white text-[#214782] px-2 py-1 sm:px-6 sm:py-2 rounded-md sm:rounded-lg shadow-2xl z-10">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <p className="text-[10px] sm:text-sm font-semibold uppercase tracking-wide">
                     Diskon
                   </p>
-                  <p className="text-xl sm:text-2xl font-bold">
+                  <p className="text-base sm:text-2xl font-bold">
                     {promo.discount || "50%"}
                   </p>
                 </div>

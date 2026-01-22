@@ -1,5 +1,6 @@
 import { Homepage, WhyUsFeature } from "@/sanity/queries";
 import Image from "next/image";
+import { urlFor } from "@/sanity/lib/image";
 
 interface WhyUsProps {
   data?: Homepage | null;
@@ -32,26 +33,49 @@ export default function WhyUs({ data, whyUsFeatures }: WhyUsProps) {
   const benefits =
     whyUsFeatures && whyUsFeatures.length > 0 ? whyUsFeatures : defaultFeatures;
 
+  // Debug: Log the data to check if images are coming from Sanity
+  console.log("WhyUs Features:", whyUsFeatures);
+
   return (
     <section className="py-0 sm:py-6 bg-[#041A2F]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-x-auto scrollbar-hide -mx-4 sm:mx-0">
           <div className="flex gap-3 sm:gap-6 px-4 sm:px-0 pb-2">
-            {benefits.map((benefit, index) => (
-              <div
-                key={index}
-                className="relative aspect-video rounded-lg sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 hover:shadow-2xl flex-shrink-0 w-[200px] sm:w-[280px] bg-gradient-to-br from-[#041A2F] to-[#28529C]"
-              >
-                {benefit.image && (
-                  <Image
-                    src={benefit.image}
-                    alt={benefit.title || `Feature ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                )}
-              </div>
-            ))}
+            {benefits.map((benefit, index) => {
+              let imageUrl = null;
+
+              try {
+                if (benefit.image) {
+                  // Check if it's a Sanity image object or a string
+                  if (typeof benefit.image === "string") {
+                    imageUrl = benefit.image;
+                  } else if (benefit.image.asset) {
+                    imageUrl = urlFor(benefit.image)
+                      .width(560)
+                      .height(315)
+                      .url();
+                  }
+                }
+              } catch (error) {
+                console.error("Error loading image:", error);
+              }
+
+              return (
+                <div
+                  key={index}
+                  className="relative aspect-video rounded-lg sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 hover:shadow-2xl flex-shrink-0 w-[200px] sm:w-[280px] bg-gradient-to-br from-[#041A2F] to-[#28529C]"
+                >
+                  {imageUrl && (
+                    <Image
+                      src={imageUrl}
+                      alt={benefit.title || `Feature ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

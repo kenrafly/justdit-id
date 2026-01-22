@@ -140,14 +140,8 @@ export interface Homepage {
 export async function getPromos(): Promise<Promo[]> {
   const query = `*[_type == "promo" && isActive == true] | order(order asc) {
     _id,
-    title,
-    subtitle,
-    promoTitle,
-    validUntil,
     image,
-    imageUrl,
-    bgColor,
-    buttonLink,
+    discount,
     order,
     isActive
   }`;
@@ -281,6 +275,7 @@ export async function getWhyUsFeatures(): Promise<WhyUsFeature[]> {
     icon,
     title,
     description,
+    image,
     order,
     isActive
   }`;
