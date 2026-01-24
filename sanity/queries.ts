@@ -43,6 +43,21 @@ export interface Product {
   isActive: boolean;
 }
 
+export interface AllProduct {
+  _id: string;
+  name: string;
+  slug: { current: string };
+  category: string;
+  description?: string;
+  image?: any;
+  imageUrl?: string;
+  price: number;
+  duration: string;
+  rating: number;
+  order: number;
+  isActive: boolean;
+}
+
 export interface Bundle {
   _id: string;
   name: string;
@@ -187,6 +202,25 @@ export async function getProducts(featured?: boolean): Promise<Product[]> {
     bgColor,
     plans,
     isFeatured,
+    order,
+    isActive
+  }`;
+
+  return client.fetch(query);
+}
+
+export async function getAllProducts(): Promise<AllProduct[]> {
+  const query = `*[_type == "allProducts" && isActive == true] | order(order asc) {
+    _id,
+    name,
+    slug,
+    category,
+    description,
+    image,
+    imageUrl,
+    price,
+    duration,
+    rating,
     order,
     isActive
   }`;

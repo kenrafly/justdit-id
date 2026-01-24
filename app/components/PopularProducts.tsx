@@ -3,18 +3,20 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Product, Homepage } from "@/sanity/queries";
+import { Product, AllProduct, Homepage } from "@/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
 
 type ProductCategory = "all" | "editing" | "streaming" | "edukasi" | "working";
 
 interface PopularProductsProps {
   products?: Product[];
+  allProducts?: AllProduct[];
   data?: Homepage | null;
 }
 
 export default function PopularProducts({
   products: cmsProducts,
+  allProducts: cmsAllProducts,
   data,
 }: PopularProductsProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -159,6 +161,132 @@ export default function PopularProducts({
         }))
       : fallbackProducts.map((p) => ({ ...p, image: null, imageUrl: null }));
 
+  // Transform all products for paginated section
+  const fallbackAllProducts = [
+    {
+      name: "Netflix Premium",
+      description: "4K Ultra HD + Download",
+      price: "Rp 25.000",
+      duration: "30 Hari",
+      image: "/placeholder-netflix.jpg",
+      rating: 4.9,
+      category: "streaming" as ProductCategory,
+    },
+    {
+      name: "Spotify Premium",
+      description: "No Ads + Offline Mode",
+      price: "Rp 15.000",
+      duration: "30 Hari",
+      image: "/placeholder-spotify.jpg",
+      rating: 4.8,
+      category: "streaming" as ProductCategory,
+    },
+    {
+      name: "Disney+ Hotstar",
+      description: "Premium Content",
+      price: "Rp 20.000",
+      duration: "30 Hari",
+      image: "/placeholder-disney.jpg",
+      rating: 4.7,
+      category: "streaming" as ProductCategory,
+    },
+    {
+      name: "YouTube Premium",
+      description: "Ad-free + Music",
+      price: "Rp 18.000",
+      duration: "30 Hari",
+      image: "/placeholder-youtube.jpg",
+      rating: 4.9,
+      category: "streaming" as ProductCategory,
+    },
+    {
+      name: "Canva Pro",
+      description: "Premium Design Tools",
+      price: "Rp 22.000",
+      duration: "30 Hari",
+      image: "/placeholder-canva.jpg",
+      rating: 4.8,
+      category: "editing" as ProductCategory,
+    },
+    {
+      name: "ChatGPT Plus",
+      description: "GPT-4 Access",
+      price: "Rp 30.000",
+      duration: "30 Hari",
+      image: "/placeholder-chatgpt.jpg",
+      rating: 5.0,
+      category: "edukasi" as ProductCategory,
+    },
+    {
+      name: "Amazon Prime",
+      description: "Video + Free Shipping",
+      price: "Rp 28.000",
+      duration: "30 Hari",
+      image: "/placeholder-amazon.jpg",
+      rating: 4.7,
+      category: "streaming" as ProductCategory,
+    },
+    {
+      name: "Adobe Premiere Pro",
+      description: "Professional Video Editing",
+      price: "Rp 35.000",
+      duration: "30 Hari",
+      image: "/placeholder-adobe.jpg",
+      rating: 4.9,
+      category: "editing" as ProductCategory,
+    },
+    {
+      name: "Microsoft 365",
+      description: "Office Suite + 1TB Cloud",
+      price: "Rp 27.000",
+      duration: "30 Hari",
+      image: "/placeholder-microsoft.jpg",
+      rating: 4.8,
+      category: "working" as ProductCategory,
+    },
+    {
+      name: "Coursera Plus",
+      description: "Unlimited Learning",
+      price: "Rp 32.000",
+      duration: "30 Hari",
+      image: "/placeholder-coursera.jpg",
+      rating: 4.7,
+      category: "edukasi" as ProductCategory,
+    },
+    {
+      name: "Grammarly Premium",
+      description: "AI Writing Assistant",
+      price: "Rp 24.000",
+      duration: "30 Hari",
+      image: "/placeholder-grammarly.jpg",
+      rating: 4.8,
+      category: "working" as ProductCategory,
+    },
+    {
+      name: "Notion Premium",
+      description: "Workspace & Docs",
+      price: "Rp 19.000",
+      duration: "30 Hari",
+      image: "/placeholder-notion.jpg",
+      rating: 4.9,
+      category: "working" as ProductCategory,
+    },
+  ];
+
+  const allProductsData =
+    cmsAllProducts && cmsAllProducts.length > 0
+      ? cmsAllProducts.map((product: any) => ({
+          name: product.name,
+          description: product.description || "",
+          price: `Rp ${product.price.toLocaleString("id-ID")}`,
+          duration: product.duration || "30 Hari",
+          image: product.image?.asset ? product.image : null,
+          imageUrl: product.imageUrl || null,
+          rating: product.rating || 4.9,
+          category: (product.category || "streaming") as ProductCategory,
+        }))
+      : fallbackAllProducts.map((p) => ({ ...p, image: null, imageUrl: null }));
+
   const categories = [
     { id: "editing" as ProductCategory, label: "Editing" },
     { id: "streaming" as ProductCategory, label: "Streaming" },
@@ -168,8 +296,8 @@ export default function PopularProducts({
 
   const filteredProducts =
     activeCategory === "all"
-      ? products
-      : products.filter((p) => p.category === activeCategory);
+      ? allProductsData
+      : allProductsData.filter((p) => p.category === activeCategory);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -417,11 +545,10 @@ export default function PopularProducts({
             {paginatedProducts.map((product, index) => (
               <div
                 key={`${product.name}-${index}`}
-                className="bg-[#1a4573] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl relative"
-                style={{ aspectRatio: "1/1" }}
+                className="bg-[#1a4573] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl flex flex-col"
               >
-                {/* Image fills entire card */}
-                <div className="absolute inset-0 bg-linear-to-br from-[#1a4573] to-[#112E56]">
+                {/* Image fills this div only */}
+                <div className="relative w-full aspect-square bg-linear-to-br from-[#1a4573] to-[#112E56]">
                   {product.imageUrl ? (
                     <Image
                       src={product.imageUrl}
@@ -431,7 +558,7 @@ export default function PopularProducts({
                     />
                   ) : product.image?.asset ? (
                     <Image
-                      src={urlFor(product.image).width(400).height(600).url()}
+                      src={urlFor(product.image).width(400).height(400).url()}
                       alt={product.name}
                       fill
                       className="object-cover"
@@ -443,22 +570,28 @@ export default function PopularProducts({
                   )}
                 </div>
 
-                {/* Text overlay at bottom */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 bg-gradient-to-t from-black/80 to-transparent">
-                  <div className="flex items-end justify-between">
-                    <div>
+                {/* Text content below image */}
+                <div className="p-3 sm:p-4 flex flex-col gap-2 sm:gap-3 bg-[#1a4573]">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
                       <div className="text-sm sm:text-lg font-bold text-white">
                         {product.price}
                       </div>
-                      <div className="text-[10px] sm:text-xs text-gray-300">
-                        {product.duration}
-                      </div>
                     </div>
-                    <div className="flex items-center gap-1 bg-yellow-400/20 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-yellow-400/30">
-                      <span className="text-base sm:text-xl">⭐</span>
-                      <span className="text-sm sm:text-lg font-bold text-yellow-400">
-                        4.9
+                    <div className="flex items-center gap-1 bg-yellow-400/20 backdrop-blur-sm px-2 py-1 rounded-lg border border-yellow-400/30">
+                      <span className="text-sm">⭐</span>
+                      <span className="text-xs font-bold text-yellow-400">
+                        {product.rating}
                       </span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] sm:text-xs text-gray-300">
+                      {product.name}
+                    </div>
+                    <div className="text-[10px] sm:text-xs text-gray-300">
+                      {product.duration}
                     </div>
                   </div>
 

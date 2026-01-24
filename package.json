@@ -10,6 +10,7 @@
     "sanity": "sanity dev",
     "sanity:deploy": "sanity deploy",
     "seed": "tsx scripts/seed.ts",
+    "seed:all-products": "tsx scripts/seed-all-products.ts",
     "clear-sanity": "tsx scripts/clear-sanity.ts"
   },
   "dependencies": {
