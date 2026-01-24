@@ -65,12 +65,32 @@ export default defineType({
       description: "e.g., 1 Bulan, 1 Tahun",
     }),
     defineField({
+      name: "icon",
+      title: "Icon Emoji",
+      type: "string",
+      description: "Emoji to display (e.g., 🎬, 🎵, 💼, 🚀)",
+    }),
+    defineField({
+      name: "rating",
+      title: "Rating",
+      type: "number",
+      description: "Bundle rating (0-5)",
+      validation: (Rule) => Rule.min(0).max(5),
+      initialValue: 4.9,
+    }),
+    defineField({
       name: "image",
       title: "Bundle Image",
       type: "image",
       options: {
         hotspot: true,
       },
+    }),
+    defineField({
+      name: "imageUrl",
+      title: "Image URL (Alternative)",
+      type: "url",
+      description: "Direct image URL (use this OR upload image above)",
     }),
     defineField({
       name: "bgColor",

@@ -69,7 +69,10 @@ export interface Bundle {
   originalPrice?: number;
   discount?: number;
   duration?: string;
+  icon?: string;
+  rating?: number;
   image?: any;
+  imageUrl?: string;
   bgColor?: string;
   isPopular: boolean;
   order: number;
@@ -240,7 +243,10 @@ export async function getBundles(): Promise<Bundle[]> {
     originalPrice,
     discount,
     duration,
+    icon,
+    rating,
     image,
+    imageUrl,
     bgColor,
     isPopular,
     order,

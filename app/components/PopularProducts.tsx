@@ -585,7 +585,7 @@ export default function PopularProducts({
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="text-[10px] sm:text-xs text-gray-300">
                       {product.name}
@@ -608,11 +608,11 @@ export default function PopularProducts({
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex justify-center gap-2 mt-8">
+            <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                className={`px-3 md:px-4 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
                   currentPage === 1
                     ? "bg-gray-700 text-gray-500 cursor-not-allowed"
                     : "bg-[#1a4573] text-white hover:bg-[#28529C]"
@@ -621,12 +621,37 @@ export default function PopularProducts({
                 Previous
               </button>
 
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
+              {/* First page */}
+              {currentPage > 3 && (
+                <>
+                  <button
+                    onClick={() => handlePageChange(1)}
+                    className="px-3 md:px-4 py-2 rounded-lg font-semibold transition-all text-sm md:text-base bg-[#1a4573] text-white hover:bg-[#28529C]"
+                  >
+                    1
+                  </button>
+                  {currentPage > 4 && (
+                    <span className="px-2 text-white">...</span>
+                  )}
+                </>
+              )}
+
+              {/* Pages around current */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter((page) => {
+                  return (
+                    page === currentPage ||
+                    page === currentPage - 1 ||
+                    page === currentPage - 2 ||
+                    page === currentPage + 1 ||
+                    page === currentPage + 2
+                  );
+                })
+                .map((page) => (
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                    className={`px-3 md:px-4 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
                       currentPage === page
                         ? "bg-white text-[#041A2F] shadow-lg"
                         : "bg-[#1a4573] text-white hover:bg-[#28529C]"
@@ -634,13 +659,27 @@ export default function PopularProducts({
                   >
                     {page}
                   </button>
-                ),
+                ))}
+
+              {/* Last page */}
+              {currentPage < totalPages - 2 && (
+                <>
+                  {currentPage < totalPages - 3 && (
+                    <span className="px-2 text-white">...</span>
+                  )}
+                  <button
+                    onClick={() => handlePageChange(totalPages)}
+                    className="px-3 md:px-4 py-2 rounded-lg font-semibold transition-all text-sm md:text-base bg-[#1a4573] text-white hover:bg-[#28529C]"
+                  >
+                    {totalPages}
+                  </button>
+                </>
               )}
 
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                className={`px-3 md:px-4 py-2 rounded-lg font-semibold transition-all text-sm md:text-base ${
                   currentPage === totalPages
                     ? "bg-gray-700 text-gray-500 cursor-not-allowed"
                     : "bg-[#1a4573] text-white hover:bg-[#28529C]"

@@ -63,7 +63,11 @@ export default async function Home({ searchParams }: HomeProps) {
       <main>
         <Hero data={homepage} promos={promos} />
         <WhyUs data={homepage} whyUsFeatures={whyUsFeatures} />
-        <PopularProducts products={products} allProducts={allProducts} data={homepage} />
+        <PopularProducts
+          products={products}
+          allProducts={allProducts}
+          data={homepage}
+        />
         <Bundling bundles={bundles} data={homepage} />
         <RegisterCTA data={cta} />
         <TipsTricks tips={tips} data={homepage} faqs={faqs} />
