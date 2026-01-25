@@ -371,7 +371,7 @@ export default function PopularProducts({
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-8 sm:py-12 bg-[#041A2F]">
+    <section ref={sectionRef} className="bg-[#041A2F]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title Section - Top Left */}
         <div

@@ -40,7 +40,7 @@ export default function WhyUs({ data, whyUsFeatures }: WhyUsProps) {
     <section className="bg-[#041A2F]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-x-auto scrollbar-hide -mx-4 sm:mx-0">
-          <div className="flex gap-3 sm:gap-6 px-4 sm:px-0 pb-2">
+          <div className="flex gap-3 px-4 sm:px-0 pb-2">
             {benefits.map((benefit, index) => {
               let imageUrl = null;
 

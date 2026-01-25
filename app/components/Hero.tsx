@@ -21,7 +21,7 @@ interface HeroProps {
 
 export default function Hero({ data, promos }: HeroProps) {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden my-3">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Full-width Promo Carousel */}
         <PromoCarousel promos={promos} />
