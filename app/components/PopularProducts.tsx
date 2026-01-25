@@ -442,7 +442,7 @@ export default function PopularProducts({
               {products.map((product, index) => (
                 <div
                   key={index}
-                  className={`bg-[#28529C] rounded-xl sm:rounded-2xl overflow-hidden hover:transform hover:scale-105 transition-all duration-700 shadow-xl hover:shadow-2xl w-56 sm:w-80 flex-shrink-0 relative ${
+                  className={`bg-[#28529C] rounded-xl sm:rounded-2xl hover:transform hover:scale-105 transition-all duration-700 shadow-xl hover:shadow-2xl w-56 sm:w-80 flex-shrink-0 relative ${
                     isVisible
                       ? "opacity-100 translate-x-0"
                       : "opacity-0 translate-x-52"
@@ -453,21 +453,55 @@ export default function PopularProducts({
                   }}
                 >
                   {/* Image fills entire card */}
-                  <div className="absolute inset-0 bg-linear-to-br from-[#28529C] to-[#1e3d7a]">
+                  <div className="absolute inset-0 rounded-xl sm:rounded-2xl overflow-hidden bg-[#28529C]">
                     {product.imageUrl ? (
-                      <Image
-                        src={product.imageUrl}
-                        alt={product.name}
-                        fill
-                        className="object-cover"
-                      />
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={product.imageUrl}
+                          alt={product.name}
+                          fill
+                          className="object-contain"
+                          sizes="(max-width: 640px) 224px, 320px"
+                          onLoadingComplete={(img) => {
+                            console.log(`Image loaded: ${product.name}`);
+                            console.log(
+                              `Natural dimensions: ${img.naturalWidth}x${img.naturalHeight}`,
+                            );
+                            console.log(
+                              `Aspect ratio: ${(img.naturalWidth / img.naturalHeight).toFixed(2)}`,
+                            );
+                            console.log(
+                              `Expected 9:16 = ${(9 / 16).toFixed(2)}`,
+                            );
+                          }}
+                        />
+                      </div>
                     ) : product.image?.asset ? (
-                      <Image
-                        src={urlFor(product.image).width(400).height(600).url()}
-                        alt={product.name}
-                        fill
-                        className="object-cover"
-                      />
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={urlFor(product.image)
+                            .fit("max")
+                            .width(1080)
+                            .height(1920)
+                            .url()}
+                          alt={product.name}
+                          fill
+                          className="object-contain"
+                          sizes="(max-width: 640px) 224px, 320px"
+                          onLoadingComplete={(img) => {
+                            console.log(`Image loaded: ${product.name}`);
+                            console.log(
+                              `Natural dimensions: ${img.naturalWidth}x${img.naturalHeight}`,
+                            );
+                            console.log(
+                              `Aspect ratio: ${(img.naturalWidth / img.naturalHeight).toFixed(2)}`,
+                            );
+                            console.log(
+                              `Expected 9:16 = ${(9 / 16).toFixed(2)}`,
+                            );
+                          }}
+                        />
+                      </div>
                     ) : (
                       <div className="flex items-center justify-center h-full">
                         <div className="text-4xl sm:text-6xl">🎬</div>
