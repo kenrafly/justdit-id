@@ -76,7 +76,7 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
             {
               <>
                 Paket Bundling Hemat Sampai{" "}
-                <span className="text-[#214782]">50%</span>
+                <span className="text-[#5AB9FF]">50%</span>
               </>
             }
           </h2>
@@ -150,8 +150,11 @@ export default function Bundling({ bundles: cmsBundles, data }: BundlingProps) {
                       <div className="text-[10px] md:text-xs text-gray-300">
                         {"duration" in bundle ? bundle.duration : "30 Hari"}
                       </div>
-                      <div className="text-yellow-400 text-xs md:text-sm">
-                        ⭐ {"rating" in bundle ? bundle.rating : 4.9}
+                      <div className="flex items-center gap-1 bg-yellow-400/20 backdrop-blur-sm px-2 py-1 rounded-lg border border-yellow-400/30">
+                        <span className="text-xs md:text-sm">⭐</span>
+                        <span className="text-xs md:text-sm font-bold text-yellow-400">
+                          {"rating" in bundle ? bundle.rating : 4.9}
+                        </span>
                       </div>
                     </div>
                   </div>

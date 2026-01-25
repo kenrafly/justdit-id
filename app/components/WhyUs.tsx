@@ -37,7 +37,7 @@ export default function WhyUs({ data, whyUsFeatures }: WhyUsProps) {
   console.log("WhyUs Features:", whyUsFeatures);
 
   return (
-    <section className="py-0 sm:py-6 bg-[#041A2F]">
+    <section className="bg-[#041A2F]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="overflow-x-auto scrollbar-hide -mx-4 sm:mx-0">
           <div className="flex gap-3 sm:gap-6 px-4 sm:px-0 pb-2">

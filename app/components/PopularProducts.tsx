@@ -611,6 +611,9 @@ export default function PopularProducts({
                       <div className="text-sm sm:text-lg font-bold text-white">
                         {product.price}
                       </div>
+                      <div className="text-[10px] sm:text-xs font-semibold mt-1">
+                        <span className="text-green-400">● Tersedia</span>
+                      </div>
                     </div>
                     <div className="flex items-center gap-1 bg-yellow-400/20 backdrop-blur-sm px-2 py-1 rounded-lg border border-yellow-400/30">
                       <span className="text-sm">⭐</span>
